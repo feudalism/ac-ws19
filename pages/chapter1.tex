@@ -1,0 +1,406 @@
+\section{Model reference adaptive control}
+
+\paragraph{Given} plant $G$ and reference model $M$
+    \begin{alignat}{3}
+        G&:~    & \dot{x}_p(t) &= a_p x_p(t) + k_p u(t),
+                \label{eq:G-linear}\\
+                &&& \txt{IC } x_p(0) \in \R \nonumber\\
+        M&:~    & \dot{x}_m(t) &= a_m x_m(t) + k_m r(t),
+                \label{eq:M}\\
+                &&& \txt{IC } x_m(0) \in \R \nonumber
+    \end{alignat}
+    \begin{variables}
+        a_p     & pole of plant\\
+        k_p     & input gain of plant\\
+        a_m     & pole of reference model\\
+        r(t)    & reference signal
+    \end{variables}
+    The plant parameters are assumed to be known.
+    The reference model parameters are set by the user
+    and are therefore known.
+
+\paragraph{Task} find a control $u(t)$ such that
+$x_p(t) \rightarrow x_m(t)$ for $t\rightarrow \infty$.
+\begin{alignat}{3}
+    \tund{G}{des}:~
+    && \dot{x}_p(t)    &= a_m x_p(t) + k_p r(t)
+                \label{eq:G-des}\\
+                &&&\txt{IC } x_p(0) \in \R \nonumber
+\end{alignat}
+
+
+\subsection{Solve with model reference control (MRC)}~\\
+Pick $u(t)$ s.t. dynamical behaviour of closed loop is equal 
+to that of the model.
+\begin{align*}
+u^*(t)
+    &= \frac{1}{k_p} \left( -a_p x_p(t) + a_m x_p(t) + k_m r(t) \right)\\
+    &= \underbrace{\frac{a_m - a_p}{k_p}}_{a^*} x_p(t)
+        + \underbrace{\frac{k_m}{k_p}}_{k^*} r(t)\\
+%    &= a^* x_p(t) + k^* r(t) \\
+    &= \matr{a^* & k^*} \matr{x_p(t) \\ r(t)}\\
+u^*(t)
+    &= \bm{\theta}^{*T}(t) \bm{\phi}(t)
+    \numberthis \label{eq:u-perfect-linear}
+\end{align*}~
+
+Using this input, now the dynamics of the plant $G$ matches the dynamics
+of the model $M$ (Equation \eqn{eq:G-des-dynamics}). 
+The starred variables with $*$ superscripts represent
+the correct values of the known parameters.\\
+
+However, even though now the dynamics are the same,
+the initial conditions are not necessarily the same.
+Would this input also work for $x_m(0) \neq x_p(0)$?
+I.e., does this guarantee that $x_p(t) \rightarrow x_m(t)$ for $t \rightarrow \infty$?\\
+
+To check this, we check the error dynamics
+and see if the error asymptotically goes to zero.
+\begin{align*}
+e(t) &= x_p(t) - x_m(t)\\
+\dot{e}(t) &= \dot{x}_p(t) - \dot{x}_m(t)\\
+\end{align*}
+
+Using eqns. \eqn{eq:M} and \eqn{eq:G-des}:
+\begin{align}
+\dot{e}(t)    &= a_m e(t)
+\label{eq:error-dynamics}
+\end{align}~
+
+If $a_m <0$, the error dynamics are stable, that is,
+$e(t) \rightarrow 0$ for any ICs.
+
+\paragraph{Conclusion}
+\begin{itemize}
+\item Model reference control (MRC) works with the error dynamics of the
+    reference model
+\item We need to know all plant parameters very well \\
+    $\Rightarrow$ Problem: uncertainty in parameters
+\end{itemize}
+
+
+\subsection{Solve with model reference adaptive control}
+\paragraph{Now}
+$a_p$, $k_p$ unknown, $k_p>0$
+
+\paragraph{Control law}
+We search for (learn) the value of $\theta$ and $k$,
+which are therefore functions of time.
+\begin{alignat*}{3}
+u(t)    %&= a(t) x_p(t) + k(t) r(t)\\
+        &= \matr{a(t) & k(t)} \matr{x_p(t) \\ r(t)}\\
+        &= \bm{\theta}^T(t)  \bm{\phi}(t)
+\label{eq:u-linear}
+\end{alignat*}
+
+\paragraph{Adaptive law}
+Adapt the control parameters in the following fashion.
+\begin{alignat*}{3}
+\matr{\dot{a}(t) \\ \dot{k}(t)}
+    &= - \sign{k_p} e(t)
+            \matr{\gamma_1 & 0\\
+                  0 & \gamma_2} \matr{x_p(t) \\ r(t)}\\
+\Rightarrow~ \dot{\bm{\theta}} &= - \sign{k_p} e(t) \bm{\Gamma} \bm{\phi}(t)
+    \numberthis \label{eq:adaptive-law}
+\end{alignat*}~
+
+The equations in \eqn{eq:adaptive-law} are nonlinear ODEs.
+
+\paragraph{Questions}
+\begin{itemize}
+\item Is the closed loop stable?
+\item Does with this, $e(t) \rightarrow 0$?
+\item Are the parameters $\theta(t), k(t)$ finite? 
+\item Are the parameters $\theta(t), k(t)$ constant for $t \rightarrow \infty$?
+\item Do the parameters $\theta(t), k(t)$
+        approach their `correct' values $\theta^*, k^*$
+        for $t \rightarrow \infty$?
+\end{itemize}
+
+\subsection{Generalisation}
+\begin{alignat*}{3}
+G&:~ &
+    \dot{x}_p(t) &= a_p x_p(t) + k_p u(t) + \alpha_p f(z)
+    \numberthis \label{eq:G-nonlinear}\\
+M&:~ &
+    \dot{x}_m(t) &= a_m x_m(t) + k_m r(t) + \cancel{\alpha_m f(z)}
+    \tag{\ref{eq:M}}
+\end{alignat*}
+\begin{variables}
+f(z)    & Nonlinear function, (external)
+\end{variables}
+
+\begin{itemize}
+\item $a_p$, $k_p$, $\alpha_p$ are unknown but constant
+\item $\sgn{k_p}$, $f(.)$ are known ($z$ is a known signal)
+\item $\alpha_m f(z)$ is not necessary
+\end{itemize}~
+
+We define the following control structure
+\begin{alignat*}{3}
+u^*(t)
+    &= \frac{1}{k_p} \left( -a_p x_p(t) + a_m x_p(t) \right.\\
+            & \left. \qquad \qquad + k_m r(t) - \alpha_p f(z) \right)\\
+    &= \underbrace{\frac{\left( a_m - a_p \right)}{k_p}}_{a^*} x_p
+        + \underbrace{\frac{k_m}{k_p}}_{k^*} r(t)
+        + \underbrace{\frac{-\alpha_p}{k_p}}_{\alpha^*} f(z)\\
+    &= \matr{a^* & k^* & \alpha^*} \matr{x_p(t) \\ r(t) \\ f(z)}\\
+u^*(t)
+    &= \bm{\theta}^{*T}(t) \bm{\phi}(t)
+    \numberthis \label{eq:u-perfect-nonlinear}
+\end{alignat*}
+
+\paragraph{Choose}
+\begin{alignat*}{3}
+u(t) &= a(t) x_p(t) + k(t) r(t) + \alpha(t) f(z) \\
+     &= \matr{a(t) & k(t) & \alpha(t)} \matr{x_p(t) \\ r(t) \\ f(z)}\\
+u(t) &= \bm{\theta}^T(t) \bm{\phi}(t)
+    \numberthis \label{eq:u-nonlinear}
+\end{alignat*}
+$a(t),~ k(t),~ \alpha(t)$ unknown.
+
+\paragraph{Goal}
+$x_p(t) \rightarrow x_m(t)$ for $t \rightarrow \infty$.
+
+\paragraph{Error dynamics}
+In AC, the current estimated parameters are varying.
+We therefore have
+the following error in parameters
+as deviations from the unknown but exact and constant
+real parameters:
+\begin{alignat*}{3}
+\left.
+\begin{array}{rl}
+    \tilde{a}(t) &= a(t) - a^*\\
+    \tilde{k}(t) &= k(t) - k^*\\
+    \tilde{\alpha}(t) &= \alpha(t) - \alpha^*
+\end{array}
+\right\rbrace \tilde{\bm{\theta}}(t) = \bm{\theta}(t) - \bm{\theta}^*
+\end{alignat*}%
+%
+\begin{alignat*}{3}
+\dot{e}(t) &= a_p x_p(t)\\
+        & \qquad + k_p \left( a(t) x_p(t) + k(t) r(t) + \alpha(t) f(z) \right)\\
+        & \qquad + \alpha_p f(z)\\
+        & \qquad - \left( a_m x_m(t) + k_m r(t) \right)\\
+    &= a_p x_p(t) - a_m x_m(t)\\
+        & \qquad + k_p a(t) x_p(t)\\
+        & \qquad + k_p \underbrace{ \left(  k(t) - \frac{k_m}{k_p} \right) }_{ \tilde{k}(t)} r(t)\\
+        & \qquad + k_p \underbrace{\left( \alpha(t) - \frac{\alpha_p}{k_p} \right)}_{\tilde{\alpha}(t)} f(z)\\
+    &= \underbrace{\left( a_m - k_p a^* \right)}_{a_p} x_p(t)
+        - a_m x_m(t) + k_p a(t) x_p(t)\\
+        & \quad + k_p \tilde{k}(t) r(t)
+        + k_p \tilde{\alpha}(t) f(z)\\
+\dot{e}(t) &= \known{a_m e(t)}
+        + \unknown{k_p \tilde{a}(t)} \known{x_p(t)}
+        + \unknown{k_p \tilde{k}(t)} \known{r(t)}
+        + \unknown{k_p \tilde{\alpha}(t)} \known{f(z)}
+\end{alignat*}
+\begin{variables}
+\color{colKnown} var & known/measured\\
+\color{red} var   & unknown\\
+\end{variables}
+
+\paragraph{Note} All unknown parameters that appear linearly (affine,
+``linear in the parameters'') can be collected in a vector $\theta(t)$.
+Same with the measurable functions of time $\phi(t)$ (regressor).
+\begin{alignat*}{3}
+\dot{e}(t)
+    &= \known{a_m e(t)}
+        + \unknown{k_p \matr{\tilde{a}(t) & \tilde{k(t)} & \tilde{\alpha}(t)}}
+        \known{\matr{x_p(t) \\ r(t) \\ f(z)}} \\
+\dot{e}(t)
+    &= a_m e(t) + \frac{1}{k^*} k_m \bm{\theta}^T(t) \bm{\phi}(t) 
+    \numberthis \label{eq:error-dynamics-nonlinear}\\
+e(t)    &= \frac{1}{k^*} M(s) \bm{\theta}^T(t) \bm{\phi}(t)\\
+    & \qquad \quad \txt{Operator: } M(s) = \dfrac{k_m}{s - a_m}
+\end{alignat*}
+
+The above is a nonlinear differential equation.
+When is it stable? $ \rightarrow$ Lyapunov\\
+
+\subsection{Lyapunov-like functions}
+\paragraph{New interpretation of Lyapunov}
+Nothing to do with energy.
+$\bm{V}$ affects the scaling of the distance of $\bm{x}$ 
+from the origin in the phase portrait:
+$\norm{\bm{x}}^2_{\bm{V}} = \bm{x}^T \bm{V} \bm{x}$, $\bm{V} \succ 0$.\\
+$\Rightarrow$ all Lyapunov says: how far is $\bm{x}$ 
+from the origin? We want to find some type of measure
+for that.
+
+\paragraph{Lyapunov function} (Lyapunov-like)\\
+$\bm{\Gamma} \succ 0$ symmetrical, positive definite.
+\begin{alignat*}{3}
+V(e, \tilde{\bm{\theta}})
+    &= \frac{1}{2}e^2 + \frac{1}{2}|k_p| \left( \tilde{\bm{\theta}}^T \bm{\Gamma}^{-1} \tilde{\bm{\theta}} \right)
+    \numberthis \label{eq:V}\\
+\dot{V}
+    &= e \dot{e} + \frac{1}{2}|k_p|\left( 2 \tilde{\bm{\theta}}^T \bm{\Gamma}^{-1} \dot{\tilde{\bm{\theta}}} \right)\\
+\intertext{substitute $\dot{e}$ using equation \eqn{eq:error-dynamics-nonlinear}}
+    &= a_me^2 + e k_p \tilde{\bm{\theta}}^T \bm{\phi}
+        + \frac{1}{2} |k_p| \left( 2 \tilde{\bm{\theta}^T \bm{\Gamma}^{-1} \dot{\tilde{\bm{\theta}}}} \right)\\
+    &= a_me^2 + |k_p| \tilde{\bm{\theta}}^T
+        \underbrace{\left(
+        \sign{k_p} e \phi + \bm{\Gamma}^{-1} \dot{\tilde{\theta}}\right)}_{
+        \overset{!}{=} 0} \\
+\intertext{set second term = 0, $\because$ we want $V \preceq 0$ and
+we don't know all the signs of the terms}
+\dot{V} &= a_m e^2 \preceq 0 \numberthis \label{eq:Vdot}
+\end{alignat*}
+
+\paragraph{Adaptive law}
+\begin{alignat*}{3}
+\dot{\tilde{\theta}}(t) &= -\bm{\Gamma} \sign{k_p} \bm{\phi}(t) e(t)\\
+\dot{\theta}(t) &= -\bm{\Gamma} \sign{k_p} \bm{\phi}(t) e(t)\\
+\end{alignat*}
+
+\paragraph{Remark}
+$e(t)$ does not have to be 0 -- why?\\
+A function that is bounded from below
+and non-increasing ($V$) has a limit as $t \rightarrow \infty$.\\
+
+If the derivative of a function $\rightarrow 0$,
+that \textcolor{red}{does not} imply that the function
+has a limit, and vice versa:
+if a function has a limit, that doesn't mean its
+derivative $\rightarrow 0$.
+\begin{alignat*}{3}
+\lim_{t \rightarrow \infty} \dot{f}(t) = 0
+    \nLeftrightarrow \lim_{t \rightarrow \infty} f(t) = k
+\end{alignat*}
+
+Counterexamples:
+\begin{itemize}
+\item $f(t) = \sin \left( \ln t \right)$ \\
+    $\nexists \lim_{t \rightarrow \infty} f(t)$\\
+    $ \dot{f}(t) = \frac{\cos \left( \ln t \right)}{t} \rightarrow 0$
+\item $f(t) = e^{-t} \sin (e^{2t})$\\
+    $\lim_{t \rightarrow \infty} f(t) = 0$\\
+    $\dot{f}(t) = -e^{-t}\sin(e^{2t}) + e^t \sin(e^{2t}) \rightarrow$
+    explodes!
+\end{itemize}
+
+\paragraph{Are the error dynamics stable?}
+\begin{itemize}
+\item Measure (some of) the states
+\item using $V = f(e, \tilde{\bm{\theta}})$
+\item $V \rightarrow \infty$? Or $V \downarrow$?\\
+    $\Rightarrow$ analyse time derivative $\dot{V}$
+\item If we show $\dot{V} \rightarrow 0$, then $e \rightarrow 0$.
+\end{itemize}
+
+\paragraph{Extensions to Lyapunov}
+There are two well-known extensions to Lyapunov to prove
+asymptotic stability, even if $\dot{V} \preceq 0$.
+\begin{enumerate}
+\item LaSalle's invariance principle
+    (only for autonomous systems)
+\item Barbalat's lemma
+    (OK for non-autonomous systems)
+\end{enumerate}
+
+Our system's error dynamics are non-autonomous,
+$\dot{e} = f(t, \dots), ~ \because$
+following another system.
+\begin{figure}[H]
+\centering
+\inkscape[\normalsize]{e-non-auto}{0.25}
+\end{figure}
+
+\paragraph{Uniformly continuous function}
+A function $f(t): \R \rightarrow \R$ 
+is uniformly continous, if\\
+$\forall \varepsilon>0: \exists \delta = \delta(\varepsilon) >0,$
+\begin{alignat*}{3}
+\forall |t_2 - t_1| &\leq \delta\\
+\Rightarrow |  f(t_2) - f(t_1) | &\leq \varepsilon
+\end{alignat*}
+
+Sufficient condition:
+If $\exists \dot{f}(t)$ (i.e. bounded),
+$\Rightarrow f(t)$ is uniformly constant.
+
+\subsection{Barbalat's lemma}
+\textbf{Variant A}\\
+If $f(t): \R \rightarrow \R$
+\begin{enumerate}
+\item is a differentiable function
+\item has a finite limit as $t \rightarrow \infty$ 
+\item $\dot{f}(t)$ is uniformly constant
+\end{enumerate}
+$\Rightarrow \lim_{t \rightarrow \infty} \dot{f}(t) = 0$\\
+
+\textbf{Variant B}\\
+If
+\begin{enumerate}
+\item $f(t): \R \rightarrow \R$ is uniformly continous $\forall t$
+\item $\exists \lim_{t \rightarrow \infty} \int_]^t f(\tau) d\tau$
+\end{enumerate}
+$\Rightarrow \lim_{t \rightarrow \infty} f(t) = 0$\\
+
+\textbf{Variant C}\\
+If $f, \dot{f} \in \mathcal{L}_\infty$ 
+and $f \in \mathcal{L}_2$,
+then  $|f(t)| \rightarrow 0$ as $t \rightarrow \infty$.
+
+\paragraph{Closed loop stability analysis}
+By definition, $V \succeq 0$ and $\dot{V} \preceq 0$.\\
+
+Boundedness of $e(t)$
+\begin{itemize}
+\item As $V$ is bounded from below and non-increasing,
+    $V$ has a limit as $t \rightarrow \infty$.
+\item Tracking error $e(t)$ and parameter errors $ \tilde{\bm{\theta}}(t)$
+    are bounded.
+\item As $\tilde{\bm{\theta}}(t)$ bounded and $\bm{\theta}^*$ constant,
+    $\bm{\theta}(t)$ is bounded.
+\end{itemize}~
+
+Boundedness of $\dot{e}(t)$ 
+\begin{itemize}
+\item Assume $r(t)$ bounded, then
+    $x_m(t), \dot{x}_m(t)$ bounded ($\because~ M$ is stable)
+\item $x_p(t) = \bounded{e(t)} + \bounded{x_m(t)}$\\
+    $\Rightarrow x_p(t)$ bounded.
+\item $u(t)$ bounded if $\bm{\phi}(t)$ bounded.\\
+    $\bm{\phi}(t) = \matr{\bounded{r(t)} & \bounded{x_p(t)} & \bounded{f(z)}}$\\
+    (new requirement: $f(z)$ needs to be bounded).
+\item $\dot{x}_p(t) = a_p \bounded{x_p(t)} + k_p \bounded{u(t)}$\\
+    $\Rightarrow \dot{x}_p(t)$ bounded\\
+\item $\dot{e}(t) = \bounded{\dot{x}_p(t)} - \bounded{\dot{x}_m(t)}$
+    is bounded.
+\end{itemize}~
+
+With $\ddot{V} = 2 a_m \bounded{e} \bounded{\dot{e}}$,
+$\ddot{V}$ bounded $\rightarrow \dot{V}$ uniformly constant.\\
+
+Using Barbalat's lemma Variant A,
+\begin{itemize}
+\item $V$ is differentiable
+\item $V$ has a finite limit as $t \rightarrow \infty$ \\
+    (bounded from below and non-increasing)
+\item $\dot{V}$ is uniformly constant
+\end{itemize}
+\begin{alignat*}{3}
+\Rightarrow& ~ & \lim_{t \rightarrow \infty} \dot{V} &= 0\\
+\Rightarrow& ~ & \lim_{t \rightarrow \infty} e(t) &= 0
+\end{alignat*}
+
+\paragraph{Signal norm, $\mathcal{L}_p$ space}
+``how big is a signal?''
+\begin{itemize}
+\item \textbf{Idea}: quantify magnitude of a signal $x(t)$\\
+    $x(t): \R^+ \rightarrow \R^n, \quad \R^+ = [0, \infty)$
+\item p-Norm
+    \begin{alignat*}{3}
+    \|x_p\| &= \left( \int_0^\infty |x(t)|^p dt \right)^{1/p}
+        & \qquad p \in (0, \infty)
+    \end{alignat*}
+\item If $\bm{x}(t)$ vector, $|.|$ is the vector 2-norm,
+    `distance'.
+\item $\|x\|_\infty = \sup_{t \in \R^+} |x(t)| \corresponds$ 
+    highest value of $\bm{x}$\\
+    ``When power $\infty$, only the greatest value survives''
+\end{itemize}
+

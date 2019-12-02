@@ -1,0 +1,182 @@
+% LANGUAGE / TYPESETTING
+	% Main language: English
+	\usepackage[UKenglish]{babel}
+	\usepackage[english]{varioref}
+	
+%	% Input of special characters e.g. áüó
+%	% To be loaded before csquotes
+%	\usepackage[utf8]{inputenc}
+%	% Glyph adjust,
+%	% e.g. allows the characters 'äúö' etc.
+%	% to be correctly copied from PDF.
+	% If not loaded, 'auo' would be copied.
+	\usepackage[T1]{fontenc}
+	% Workaround for fontenc making everything ugly..
+	\usepackage{lmodern} 
+	% Input "	
+	\usepackage[autostyle=true]{csquotes}	
+	\MakeOuterQuote{"}
+	
+	% % Sans-serif font
+% 	\renewcommand{\familydefault}{lmss}
+	
+	% Serif font (text and math) (optional)
+	\usepackage[osf]{mathpazo}
+	% Serif math font (optional)
+	\usepackage{eulervm}
+	
+	\widowpenalty10000						% No widows
+	\clubpenalty10000						% No orphans
+	
+	
+%% MARGINS
+    \setlength{\columnsep}{1.3cm}
+	\usepackage[top=2cm,bottom=2cm,
+				left=1.5cm,right=1.5cm,
+				bindingoffset=15mm,
+%				showframe, % construction lines
+				]{geometry}							
+	% Removes paragraph indentation
+	\setlength{\parindent}{0pt}	
+%	% Landscape mode
+%	% Usage: \begin{landscape} ...
+%	\usepackage{pdflscape}
+%	% Removes justification
+%	\usepackage{ragged2e}
+    \raggedbottom
+    \addtokomafont{disposition}{\rmfamily}
+
+	
+%% HEADER / FOOTER
+	% Clears header footer
+	\usepackage{scrlayer-scrpage}
+	\clearscrheadfoot
+	% Sets header									
+	\rohead[\footnotesize{\thepage}]{%$\cdot$~
+					\footnotesize{\thepage}%~~$\cdot$
+					}										
+	\rehead[\footnotesize{\thepage}]{%$\cdot$~
+					\footnotesize{\thepage}%~~$\cdot$
+					}
+%	% Sets footer									
+%	\rofoot[\footnotesize{\thepage}]{%$\cdot$~
+%					\footnotesize{\thepage}%~~$\cdot$
+%					}										
+%	\refoot[\footnotesize{\thepage}]{%$\cdot$~
+%					\footnotesize{\thepage}%~~$\cdot$
+%					}	
+					
+
+%% MATH
+	\usepackage{amsmath}
+	\usepackage{amssymb}
+%	    \numberwithin{equation}{section}
+% 	\usepackage{mathabx}
+	\input{./pages/style/preamble-mathabx}
+	\usepackage{cancel}
+%	\usepackage{empheq}
+	
+	% Prevents too many alphabets error
+	\newcommand\hmmax{0}
+	\newcommand\bmmax{0}	
+	\usepackage{bm}
+	
+	\usepackage{siunitx}
+		\sisetup{
+			tight-spacing           = true,
+			round-mode              = places,
+	        round-precision         = 2,
+			table-align-text-pre	= false,
+			output-decimal-marker   = {.},
+			group-separator 	    = { },
+			}
+	
+	\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+
+
+%% GRAPHICS
+	\usepackage{graphicx}				% Enables icludegraphics
+	\usepackage{subcaption}
+	\usepackage[table]{xcolor}
+	\usepackage[labelfont=bf]{caption}	% Caption format
+	\usepackage{float}					% Position of floats
+	\graphicspath{	{./img/}
+					}					% Graphics folder path
+					
+	\usepackage{tikz}
+	\usetikzlibrary{external}
+	\tikzexternalize[prefix=img/]	
+	% Usage: \tikzexternaldisable
+		\tikzexternalenable
+		% \tikzsetnextfilename{blah}		
+	\input{./pages/style/preamble-tikz}
+	
+	
+%% TABLES
+	\usepackage{tabu}
+%	\usepackage{longtable}
+	\usepackage{booktabs}
+	\usepackage{multirow}	
+	% Row style
+	% requires array
+	\newcolumntype{+}{>{\global\let\currentrowstyle\relax}} 
+	\newcolumntype{^}{>{\currentrowstyle}}
+	% Bold column doesn't play nice with bmatrix
+%	\newcolumntype{*}{>{\bfseries}}
+	\newcommand{\rowstyle}[1]{\gdef\currentrowstyle{#1}%
+	  #1\ignorespaces}
+
+
+%% PROGRAMMING
+%	\usepackage{xstring}
+
+
+%% LISTS
+	\usepackage{enumitem}
+		% spacing b/w list items
+		\setlist{nolistsep}	
+		\setlist[enumerate,1]
+				% list indentation
+				{labelindent=0.5cm,leftmargin=*}
+	\renewcommand{\labelenumi}{(\roman{enumi})}			
+	
+%% TABLE OF STUFF
+%	\usepackage[titles]{tocloft}
+%		\newlength{\figlength}
+%		\renewcommand{\cftfigpresnum}{\figurename\enspace}
+%		\renewcommand{\cftfigaftersnum}{:\enspace}
+%		\settowidth{\figlength}{\cftfigpresnum\cftfigaftersnum}
+%		\addtolength{\cftfignumwidth}{\figlength}
+%		
+%		\newlength{\tablength}
+%		\renewcommand{\cfttabpresnum}{\tablename\enspace}
+%		\renewcommand{\cfttabaftersnum}{:}
+%		\settowidth{\tablength}{\cfttabpresnum\cfttabaftersnum}
+%		\addtolength{\cfttabnumwidth}{\tablength}
+	
+	
+%% CITATIONS / BIBLIOGRAPHY
+%	\usepackage[maxcitenames=10,
+%				backend=biber,
+%				sorting=nty,
+%				date=year,
+%				sortcites=true,
+%				]{biblatex}
+%	\addbibresource{./pages/meta/ref.bib}
+%	\input{./pages/style/bibstyle}
+%	% URL font
+%	\renewcommand{\UrlFont}{\rmfamily\footnotesize}
+		
+		
+%% DOCUMENT PROPERTIES
+%	\usepackage{hyperref}
+%	\hypersetup{	pdftitle = {ISW ARP Protokoll},
+%					pdfauthor = {Salehah Rahim},
+%					pdfstartview = {XYZ null null 1.0},
+%					bookmarksnumbered = true,
+%					bookmarksopen = true,
+%					colorlinks,
+%					linkcolor={black!50!blue},
+%					citecolor={blue},
+%					urlcolor={red},
+%					}
