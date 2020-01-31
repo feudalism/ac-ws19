@@ -1,0 +1,112 @@
+The linear SISO plant in the previous chapter is linearised to
+a nonlinear SISO plant.\\
+
+\begin{problem}{Control problem}
+\paragraph{Given} plant $G$ and reference model $M$.
+\begin{alignat*}{3}
+G&:~ &
+    \dot{x}_p(t) &= \unknownVar{a_p} x_p(t) + \unknownVar{k_p} u(t) \\
+          &&& \quad \quad + \unknownVar{\alpha_p} f(\knownVar{z})
+    \numberthis \label{eq:G-nonlinear}\\
+M&:~ &
+    \dot{x}_m(t) &= \knownVar{a_m} x_m(t) + \knownVar{k_m} r(t)
+    \tag{\ref{eq:M}}
+\end{alignat*}
+
+\begin{itemize}
+\item \redtext{$a_p$, $k_p$, $\alpha_p$} are unknown but constant
+\item $f(z)$ is a nonlinear (external) function
+\item $\sgn{k_p}$, $f(.)$ are known ($\knownVar{z}$ is a known signal)
+\item $\alpha_m f(z)$ is not necessary
+\end{itemize}
+
+\paragraph{Goal}
+$x_p(t) \rightarrow x_m(t)$ for $t \rightarrow \infty$.
+\end{problem}
+
+\subsection{Control structures}
+\paragraph{Ideal control structure} based on MRC
+\begin{alignat*}{3}
+u^*(t)
+    &= \frac{1}{k_p} \left( -a_p x_p(t) + a_m x_p(t) \right.\\
+            & \left. \qquad \qquad + k_m r(t) - \alpha_p f(z) \right)\\
+    &= \underbrace{\frac{\left( a_m - a_p \right)}{k_p}}_{a^*} x_p
+        + \underbrace{\frac{k_m}{k_p}}_{k^*} r(t)
+        + \underbrace{\frac{-\alpha_p}{k_p}}_{\alpha^*} f(z)\\
+    &= \matr{a^* & k^* & \alpha^*} \matr{x_p(t) \\ r(t) \\ f(z)}\\
+u^*(t)
+    &= \bm{\theta}^{*T} \bm{\phi}(t)
+    \numberthis \label{eq:u-ideal-nonlinear}
+\end{alignat*}
+
+\paragraph{Control law} using MRAC
+\begin{alignat*}{3}
+u(t) %&= a(t) x_p(t) + k(t) r(t) + \alpha(t) f(z) \\
+     &= \unknownVar{\matr{a(t) & k(t) & \alpha(t)}} \matr{x_p(t) \\ r(t) \\ f(z)}\\
+u(t) &= \bm{\unknownVar{\theta}}^T(t) \bm{\phi}(t)
+    \numberthis \label{eq:u-nonlinear}
+\end{alignat*}
+\redtext{$a(t),~ k(t),~ \alpha(t)$} unknown.
+
+\subsection{Error dynamics}
+In adaptive control, the current estimated parameters are varying.
+We therefore have
+the following error in parameters
+as deviations from the unknown but ideal and constant
+real parameters:
+\begin{alignat*}{3}
+\left.
+\begin{array}{rl}
+    \tilde{a}(t) &= a(t) - a^*\\
+    \tilde{k}(t) &= k(t) - k^*\\
+    \tilde{\alpha}(t) &= \alpha(t) - \alpha^*
+\end{array}
+\right\rbrace \tilde{\bm{\theta}}(t) = \bm{\theta}(t) - \bm{\theta}^*
+\end{alignat*}%
+%
+\begin{alignat*}{3}
+\dot{e}(t) &= \dot{x}_p(t) - \dot{x}_m(t)\\
+        &= a_p x_p(t)\\
+        & \qquad + k_p \left( a(t) x_p(t) + k(t) r(t) + \alpha(t) f(z) \right)\\
+        & \qquad + \alpha_p f(z)\\
+        & \qquad - \left( a_m x_m(t) + k_m r(t) \right)\\
+    &= a_p x_p(t) - a_m x_m(t)\\
+        & \qquad + k_p a(t) x_p(t)\\
+        & \qquad + k_p \underbrace{ \left(  k(t) - \frac{k_m}{k_p} \right) }_{ \tilde{k}(t)} r(t)\\
+        & \qquad + k_p \underbrace{\left( \alpha(t) - \frac{\alpha_p}{k_p} \right)}_{\tilde{\alpha}(t)} f(z)\\
+    &= \underbrace{\left( a_m - k_p a^* \right)}_{a_p} x_p(t)
+        - a_m x_m(t) \\
+        & \qquad + k_p a(t) x_p(t) \\
+        & \qquad + k_p \tilde{k}(t) r(t)
+        + k_p \tilde{\alpha}(t) f(z)\\
+    &= \knownVar{a_m} e(t)
+        + k_p \tilde{a}(t) x_p(t)\\
+        & \qquad + k_p \tilde{k}(t) r(t)
+        + k_p \tilde{\alpha}(t) f(z)
+\end{alignat*}
+\begin{alignat*}{3}
+\dot{e}(t) &= \knownVar{a_m} \measuredVar{e(t)}
+        + \unknownVar{k_p \matr{\tilde{a}(t) & \tilde{k(t)} & \tilde{\alpha}(t)}}
+        \measuredVar{\matr{x_p(t) \\ r(t) \\ f(z)}} \\
+\dot{e}(t)
+    &= \knownVar{a_m} \measuredVar{e(t)}
+        + \frac{1}{ \unknownVar{k^*}} \knownVar{k_m} \unknownVar{\bm{\theta}^T(t)} \measuredVar{\bm{\phi}(t)} 
+    \numberthis \label{eq:error-dynamics-nonlinear}
+\end{alignat*}~
+
+The error dynamics can be rewritten using an operator
+$ \knownVar{M(s)} = \dfrac{ \knownVar{k_m}}{s - \knownVar{a_m}}$.
+\begin{alignat*}{3}
+\dot{e}(t)
+    &= \knownVar{a_m} \measuredVar{e(t)}
+        + \unknownVar{\frac{1}{k^*} k_m \bm{\theta}^T(t)} \measuredVar{\bm{\phi}(t)} \\
+\left( s - \knownVar{a_m} \right) e(t)
+    &= \frac{1}{ \unknownVar{k^*}} \knownVar{k_m} \unknownVar{\bm{\theta}^T(t)} \measuredVar{\bm{\phi}(t)} \\
+e(t)    &= \frac{1}{ \unknownVar{k^*}} \knownVar{M(s)} \unknownVar{\bm{\theta}^T(t)} \measuredVar{\bm{\phi}(t)}
+    \tag{\ref{eq:error-dynamics-nonlinear}}
+\end{alignat*}
+
+All unknown parameters appear linearly (affine,
+`linear in the parameters').
+The error dynamics \eqn{eq:error-dynamics-nonlinear} is a nonlinear differential equation.
+When is it stable? $ \rightarrow$ Lyapunov.

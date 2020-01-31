@@ -1,0 +1,86 @@
+\begin{lemma}{Barbalat Variant A}
+If $f(t): \R \rightarrow \R$
+\begin{enumerate}
+\item is a differentiable function
+\item has a finite limit as $t \rightarrow \infty$ 
+\item $\dot{f}(t)$ is uniformly constant
+\end{enumerate}
+$\Rightarrow \lim_{t \rightarrow \infty} \dot{f}(t) = 0$\\
+\end{lemma}
+
+\begin{lemma}{Barbalat Variant B}
+If
+\begin{enumerate}
+\item $f(t): \R \rightarrow \R$ is uniformly continous $\forall t$
+\item $\exists~ \lim_{t \rightarrow \infty} \int_0^t f(\tau) d\tau$
+\end{enumerate}
+$\Rightarrow \lim_{t \rightarrow \infty} f(t) = 0$\\
+\end{lemma}
+
+\begin{lemma}{Barbalat Variant C}
+If $f, \dot{f} \in \mathcal{L}_\infty$ 
+and $f \in \mathcal{L}_2$,
+then  $|f(t)| \rightarrow 0$ as $t \rightarrow \infty$.
+\end{lemma}
+\paragraph{Closed loop stability analysis}
+By definition, $V \succeq 0$ and $\dot{V} \preceq 0$.\\
+
+Boundedness of $e(t)$
+\begin{itemize}
+\item As $V$ is bounded from below and non-increasing,
+    $V$ has a limit as $t \rightarrow \infty$.
+\item Tracking error $e(t)$ and parameter errors $ \tilde{\bm{\theta}}(t)$
+    are bounded.
+\item As $\tilde{\bm{\theta}}(t)$ bounded and $\bm{\theta}^*$ constant,
+    $\bm{\theta}(t)$ is bounded.
+\end{itemize}~
+
+Boundedness of $\dot{e}(t)$ 
+\begin{itemize}
+\item Assume $r(t)$ bounded, then
+    $x_m(t), \dot{x}_m(t)$ bounded ($\because~ M$ is stable)
+\item $x_p(t) = \bounded{e(t)} + \bounded{x_m(t)}$\\
+    $\Rightarrow x_p(t)$ bounded.
+\item $u(t)$ bounded if $\bm{\phi}(t)$ bounded.\\
+    $\bm{\phi}(t) = \matr{\bounded{r(t)} & \bounded{x_p(t)} & \bounded{f(z)}}$\\
+    (new requirement: $f(z)$ needs to be bounded).
+\item $\dot{x}_p(t) = a_p \bounded{x_p(t)} + k_p \bounded{u(t)}$\\
+    $\Rightarrow \dot{x}_p(t)$ bounded\\
+\item $\dot{e}(t) = \bounded{\dot{x}_p(t)} - \bounded{\dot{x}_m(t)}$
+    is bounded.
+\end{itemize}~
+
+With $\ddot{V} = 2 a_m \bounded{e} \bounded{\dot{e}}$,
+$\ddot{V}$ bounded $\rightarrow \dot{V}$ uniformly constant.\\
+
+Using Barbalat's lemma Variant A,
+\begin{itemize}
+\item $V$ is differentiable
+\item $V$ has a finite limit as $t \rightarrow \infty$ \\
+    (bounded from below and non-increasing)
+\item $\dot{V}$ is uniformly constant
+\end{itemize}
+\begin{alignat*}{3}
+\Rightarrow& ~ & \lim_{t \rightarrow \infty} \dot{V} &= 0\\
+\Rightarrow& ~ & \lim_{t \rightarrow \infty} e(t) &= 0
+\end{alignat*}
+
+\paragraph{Signal norm, $\mathcal{L}_p$ space}
+``how big is a signal?''
+\begin{itemize}
+\item \textbf{Idea}: quantify magnitude of a signal $x(t)$\\
+    $x(t): \R^+ \rightarrow \R^n, \quad \R^+ = [0, \infty)$
+\item p-Norm
+    \begin{alignat*}{3}
+    \|x_p\| &= \left( \int_0^\infty |x(t)|^p dt \right)^{1/p}
+        & \qquad p \in (0, \infty)
+    \end{alignat*}
+\item If $\bm{x}(t)$ vector, $|.|$ is the vector 2-norm,
+    `distance'.
+\item $\|x\|_\infty = \sup_{t \in \R^+} |x(t)| \corresponds$ 
+    highest value of $\bm{x}$\\
+    ``When power $\infty$, only the greatest value survives''
+\end{itemize}
+
+%% TODO FILL IN
+

@@ -1,0 +1,132 @@
+\paragraph{New interpretation of Lyapunov}
+Nothing to do with energy.
+$\bm{V}$ affects the scaling of the distance of $\bm{x}$ 
+from the origin in the phase portrait.
+\begin{align*}
+\norm{\bm{x}}^2_{\bm{V}} = \bm{x}^T \bm{V} \bm{x}, \qquad \bm{V} \succ 0
+\end{align*}~
+
+\begin{conclusion}{darkgreen}
+\textbf{All Lyapunov says is}: how far is $\bm{x}$ 
+from the origin? We want to find some type of measure
+for that.
+\end{conclusion}
+
+\paragraph{Lyapunov function} (Lyapunov-like)\\
+We want the output error $e(t)$ as well as the parameter
+error $\bm{ \tilde{\theta}}(t)$ to go to zero.
+$\bm{\Gamma} \succ 0$ symmetrical, positive definite.
+\begin{alignat*}{3}
+V(e, \tilde{\bm{\theta}})
+    &= \frac{1}{2}e^2 + \frac{1}{2}|k_p| \left( \tilde{\bm{\theta}}^T \bm{\Gamma}^{-1} \tilde{\bm{\theta}} \right)
+    \numberthis \label{eq:V}\\
+\dot{V}
+    &= e \dot{e} + \frac{1}{2}|k_p|
+    \undertxt{\left( 2 \tilde{\bm{\theta}}^T \bm{\Gamma}^{-1} \dot{\tilde{\bm{\theta}}} \right)}{\footnotemark}
+\end{alignat*}
+\footnotetext{Possible due to $\bm{\Gamma}$ symmetrical.}
+
+Substitute $\dot{e}$ using equation \eqn{eq:error-dynamics-nonlinear}.
+\begin{alignat*}{3}
+\dot{V}  &= a_me^2 + e k_p \tilde{\bm{\theta}}^T \bm{\phi}
+        + \frac{1}{2} |k_p| \left( 2 \tilde{\bm{\theta}^T \bm{\Gamma}^{-1} \dot{\tilde{\bm{\theta}}}} \right)\\
+    &= a_me^2 + |k_p| \tilde{\bm{\theta}}^T
+        \underbrace{\left(
+        \sgn{k_p} e \phi + \bm{\Gamma}^{-1} \dot{\tilde{\theta}}\right)}_{
+        \overset{!}{=} 0}
+\end{alignat*}
+
+The second term is set to 0, because we want $V \preceq 0$ and
+we don't know all the signs of the terms.
+This will define the \textbf{adaptive law}.
+\begin{alignat*}{3}
+\dot{\tilde{\theta}}(t) &= -\bm{\Gamma} \sign{k_p} \bm{\phi}(t) e(t)\\
+\dot{\theta}(t) &= -\bm{\Gamma} \sign{k_p} \bm{\phi}(t) e(t)\\
+\end{alignat*}
+
+With the adaptive law, we obtain for $\dot{V}$:
+\begin{alignat}{3}
+\dot{V} &= a_m e^2 \preceq 0 \label{eq:Vdot}
+\end{alignat}
+
+\paragraph{Remark}
+$e(t)$ does not have to be 0 -- why?
+\begin{itemize}
+\item We do not need $\dot{V}$ to approach zero.
+\item $\dot{V}=0$ does not imply that $V$ has a limit as $t \rightarrow \infty$.
+    (although this is known, see footnote below%
+    \footnote{A function $V$ that is bounded from below $V \succeq 0$
+        and \textbf{non-increasing} $\dot{V} \preceq 0$
+        has a limit as $t \rightarrow \infty$}).
+\item In other words, $\dot{V}=0$ does not imply that the errors go to zero,
+    and vice versa.
+\end{itemize}~  
+
+\begin{conclusion}{darkred}
+If the derivative of a function $\rightarrow 0$,
+that \textcolor{red}{does not} imply that the function
+has a limit, and vice versa:
+if a function has a limit, that doesn't mean its
+derivative $\rightarrow 0$.
+\begin{alignat*}{3}
+\lim_{t \rightarrow \infty} \dot{f}(t) = 0
+    \nLeftrightarrow \lim_{t \rightarrow \infty} f(t) = k
+\end{alignat*}
+\end{conclusion}~
+
+Counterexamples:
+\begin{align*}
+f(t) &= \sin \left( \ln t \right)\\
+\nexists \lim_{t \rightarrow \infty} f(t), \quad
+\dot{f}(t) &= \frac{\cos \left( \ln t \right)}{t} \rightarrow 0\\
+~\\
+f(t) &= e^{-t} \sin (e^{2t})\\
+ \lim_{t \rightarrow \infty} f(t) &= 0\\
+\dot{f}(t) &= -e^{-t}\sin(e^{2t}) + e^t \sin(e^{2t}) \\
+    & \quad \rightarrow    \txt{ explodes!}
+\end{align*}
+
+\paragraph{Are the error dynamics stable?}
+\begin{itemize}
+\item Measure (some of) the states
+\item Apply $V = f(e, \tilde{\bm{\theta}})$
+\item $V \rightarrow \infty$? Or $V \downarrow$?\\
+    $\Rightarrow$ analyse time derivative $\dot{V}$
+\item If we show $\dot{V} \rightarrow 0$, then $e \rightarrow 0$.
+\end{itemize}
+
+\paragraph{Extensions to Lyapunov}
+There are two well-known extensions to Lyapunov to prove
+asymptotic stability, even if $\dot{V} \preceq 0$.
+\begin{enumerate}
+\item LaSalle's invariance principle
+    (\redtext{only for autonomous systems})
+\item Barbalat's lemma
+    (\greentext{OK for non-autonomous systems})
+\end{enumerate}~
+
+Our system's error dynamics are non-autonomous,
+$\dot{e} = f(t, \dots)$, due to
+following another system.
+\begin{figure}[H]
+\centering
+\inkscape[\normalsize]{e-non-auto}{0.25}
+\end{figure}
+
+\begin{definition}{Uniformly continuous function}
+A function $f(t): \R \rightarrow \R$ 
+is uniformly continous, if\\
+$\forall \varepsilon>0:
+    \quad \exists~ \delta = \delta(\varepsilon) >0,$
+\begin{alignat*}{3}
+\forall |t_2 - t_1| &\leq \delta\\
+\Rightarrow |  f(t_2) - f(t_1) | &\leq \varepsilon
+\end{alignat*}
+\end{definition}
+
+\begin{conclusion}{darkgreen}
+\textbf{Sufficient condition for uniformly continuous functions}:
+If the derivative $\dot{f}(t)$ exists (i.e. bounded),
+$\Rightarrow f(t)$ is uniformly constant.
+\end{conclusion}
+

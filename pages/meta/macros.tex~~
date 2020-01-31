@@ -5,10 +5,10 @@
 % #1: file name without extension
 % #2: width in percentage of page text width
 % #3: style options, e.g. \normalsize
-\newcommand{\inkscape}[3][1]{
-        \def\svgwidth{#3\columnwidth}
-        { \footnotesize #1
-        \input{./img/#2.pdf_tex}
+\newcommand{\inkscape}[3]{
+        \def\svgwidth{#2\columnwidth}
+        { \footnotesize #3
+        \input{./img/#1.pdf_tex}
         }
     }
     
@@ -44,7 +44,7 @@
 \DeclareMathOperator*{\diag}{diag}
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\sign}{sgn}
-\newcommand{\sgn}[1]{\sign \left( #1 \right)}
+\newcommand{\sgn}[1]{ \left( #1 \right)}
 % Integral over time int{lowerbound}{upperbound}{inttegral}
 \newcommand{\intdt}[3]{\ensuremath{\int_{#1}^{#2} #3 ~dt}}
 % Sum over k {lowerbound}{upperbound}

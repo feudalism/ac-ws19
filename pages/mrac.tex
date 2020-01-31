@@ -1,0 +1,42 @@
+The \redtext{plant parameters} are unknown.
+We assume $k_p > 0$.
+\begin{alignat*}{3}
+    G&:~    & \dot{x}_p(t) &= \unknownVar{a_p} x_p(t)
+                    + \unknownVar{k_p} \unknownVar{u(t)},
+            \tag{\ref{eq:G-linear}}\\
+            &&& \txt{IC } x_p(0) \in \R
+\end{alignat*}
+
+\paragraph{Control law}
+We search for (learn) the value of $\theta$ and $k$,
+which are therefore functions of time.
+\begin{alignat*}{3}
+u(t)    %&= a(t) x_p(t) + k(t) r(t)\\
+        &= \matr{a(t) & k(t)} \matr{x_p(t) \\ r(t)}\\
+        &= \bm{\theta}^T(t)  \bm{\phi}(t)
+\numberthis \label{eq:u-linear}
+\end{alignat*}
+
+\paragraph{Adaptive law}
+Adapt the control parameters in the following fashion.
+\begin{alignat*}{3}
+\matr{\dot{a}(t) \\ \dot{k}(t)}
+    &= - \sgn{k_p} e(t)
+            \matr{\gamma_1 & 0\\
+                  0 & \gamma_2} \matr{x_p(t) \\ r(t)}\\
+\Rightarrow~ \dot{\bm{\theta}} &= - \sgn{k_p} e(t) \bm{\Gamma} \bm{\phi}(t)
+    \numberthis \label{eq:adaptive-law}
+\end{alignat*}~
+
+The equations in \eqn{eq:adaptive-law} are nonlinear ODEs.
+
+\paragraph{Questions}
+\begin{itemize}
+\item Is the closed loop stable?
+\item Does, with this, $e(t) \rightarrow 0$?
+\item Are the parameters $\bm{\theta}(t)$ finite? 
+\item Are the parameters $\bm{\theta}(t)$ constant for $t \rightarrow \infty$?
+\item Do the parameters $\bm{\theta}(t)$
+        approach their `ideal' values $\bm{\theta}^*$
+        for $t \rightarrow \infty$?
+\end{itemize}

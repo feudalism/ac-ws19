@@ -1,0 +1,63 @@
+The \greentext{plant parameters} are assumed to be known.
+\begin{alignat*}{3}
+    G&:~    & \dot{x}_p(t) &= \knownVar{a_p} x_p(t)
+                    + \knownVar{k_p} \unknownVar{u(t)},
+            \tag{\ref{eq:G-linear}}\\
+            &&& \txt{IC } x_p(0) \in \R
+\end{alignat*}~
+
+Pick $u(t)$ such that the dynamical behaviour
+of the closed loop is equal to that of the model.
+This is done by comparing \eqn{eq:G-linear} to \eqn{eq:G-des}.
+\begin{align*}
+u^*(t)
+    &= \frac{1}{k_p} \left( -a_p x_p(t) + a_m x_p(t) + k_m r(t) \right)\\
+    &= \underbrace{\frac{a_m - a_p}{k_p}}_{a^*} x_p(t)
+        + \underbrace{\frac{k_m}{k_p}}_{k^*} r(t)\\
+%    &= a^* x_p(t) + k^* r(t) \\
+    &= \matr{a^* & k^*} \matr{x_p(t) \\ r(t)}\\
+u^*(t)
+    &= \bm{\theta}^{*T} \bm{\phi}(t)
+%    \numberthis \label{eq:u-perfect-linear}
+\end{align*}~
+
+Using this input%
+    \footnote{%
+        The starred variables with $*$ superscripts represent
+        the ideal values of the control parameters.
+    }%
+, now the dynamics of the plant $G$ matches the dynamics
+of the model $M$, as in equation \eqn{eq:G-des}.\\
+
+However, even though now the dynamics are the same,
+the initial conditions are not necessarily the same.
+Would this input also work for $x_m(0) \neq x_p(0)$?
+I.e., does this guarantee that
+$x_p(t) \rightarrow x_m(t)$ for $t \rightarrow \infty$?
+
+\paragraph{Dependence on the initial conditions}
+To check this, we examine the error dynamics
+and see if the error asymptotically goes to zero.
+\begin{align*}
+e(t) &= x_p(t) - x_m(t)\\
+\dot{e}(t) &= \dot{x}_p(t) - \dot{x}_m(t)\\
+\end{align*}
+
+Using eqns. \eqn{eq:M} and \eqn{eq:G-des}:
+\begin{align}
+\dot{e}(t)    &= a_m e(t)
+\label{eq:error-dynamics}
+\end{align}~
+
+\begin{conclusion}{darkgreen}
+If $a_m <0$, the error dynamics are stable.
+That is, $e(t) \rightarrow 0$ for any ICs.
+\end{conclusion}
+
+\paragraph{Conclusion}
+\begin{itemize}
+\item Model reference control (MRC) works with the error dynamics of the
+    reference model
+\item \redtext{We need to know all plant parameters very well} \\
+    $\Rightarrow$ Problem: \redtext{uncertainty in parameters}
+\end{itemize}

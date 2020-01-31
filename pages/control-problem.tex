@@ -1,0 +1,37 @@
+\begin{problem}{Control problem}
+\paragraph{Given} plant $G$ and reference model $M$.
+\begin{alignat}{3}
+    G&:~    & \dot{x}_p(t) &= a_p x_p(t) + k_p \unknownVar{u(t)},
+            \label{eq:G-linear}\\
+            &&& \txt{IC } x_p(0) \in \R \nonumber
+\end{alignat}
+\begin{variables}
+    a_p     & pole of plant\\
+    k_p     & input gain of plant\\
+\end{variables}
+
+\begin{alignat}{3}
+    M&:~    & \dot{x}_m(t) &= \knownVar{a_m} x_m(t)
+                        + \knownVar{k_m} \knownVar{r(t)},
+            \label{eq:M}\\
+            &&& \txt{IC } x_m(0) \in \R \nonumber
+\end{alignat}
+\begin{variables}
+    \knownVar{a_m}     & pole of reference model\\
+    \knownVar{k_m}     & input gain of reference model\\
+    \knownVar{r(t)}    & reference signal
+\end{variables}%
+%
+The \greentext{reference model parameters} are set by the user
+and are therefore known.
+
+\paragraph{Task} find a control $u(t)$ such that
+$x_p(t) \rightarrow x_m(t)$ for $t\rightarrow \infty$.
+\begin{alignat}{3}
+    \tund{G}{des}:~
+    && \dot{x}_p(t)    &= \knownVar{a_m} x_p(t)
+                    + \knownVar{k_m r(t)}
+                \label{eq:G-des}\\
+                &&&\txt{IC } x_p(0) \in \R \nonumber
+\end{alignat}
+\end{problem}
