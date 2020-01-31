@@ -1,0 +1,39 @@
+{\footnotesize
+\begin{tikzpicture}
+\def\w{0.5cm}
+\def\h{1cm}
+
+\node (kp) [block] {$k_p$};
+\node (comp1) [comp, right=\w of kp] {};
+\node (comp2) [comp, right=\w of comp1] {};
+\node (i) [block,right=1.5*\w of comp2] {$\int$} {};
+\node (cout) [cout, right=1.5*\w of i] {};
+
+\node (ap) [block] at ($($(comp1)!0.5!(cout)$) + (0,0.7*\h)$) {$a_p$};
+
+\node (f2) [nonlin] at ($($(comp2)!0.7!(cout)$)+(0,-\h)$) {$f_2$};
+\node (alp2) [block, left=0.8*\w of f2.west] {$\alpha_2$};
+
+\node(alp1) [block, below=0.5*\h of comp1, anchor=north] {$\alpha_1$};
+\node (f1) [nonlin, below=0.5*\h of alp1.south, anchor=north, text width=0.6cm] {$f_1(.)$};
+
+\begin{scope}[arrow]
+\draw ($(kp.west) + (-\w,0)$) -- (kp) node [pos=0.25,above] {$u$};
+\draw (kp) -- (comp1);
+\draw (comp1) -- (comp2);
+\draw (comp2) -- (i) node [pos=0.5,above] {$ \dot{x}_p$};
+\draw (i) -- (cout) -- ++(\w,0) node [pos=1,above] {$x_p$};
+
+\draw (cout) |- (ap);
+\draw (ap) -| (comp1);
+
+\draw (cout) |- (f2);
+\draw (f2) -- (alp2);
+\draw (alp2) -| (comp2);
+
+\draw ($(f1.south)+(0,-0.5*\h)$) -- (f1) node [pos=0.2,right] {$d$ (disturbances)};
+\draw (f1) -- (alp1);
+\draw (alp1) -- (comp1);
+\end{scope}
+\end{tikzpicture}
+}

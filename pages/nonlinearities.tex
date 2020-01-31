@@ -1,0 +1,93 @@
+\input{./pages/nonlin-siso-theorem}
+
+We can add, arbitrarily, many `nonlinearities' $f_i(z_j)$ with
+unknown gains $\alpha_i$. The nonlinearity functions
+\greentext{need not be continuous}.
+The only requirement:
+\begin{conclusion}{darkred}
+\begin{alignat*}{3}
+f_i(z_j) \in \mathcal{L}_\infty
+\end{alignat*}
+Nonlinearities are bounded at all times%
+    \footnote{For the boundedness of $u(t)$ and therefore $\dot{e}(t)$}.
+\end{conclusion}
+
+\paragraph{The function $z(t)$} $z$ is a placeholder. $z(t)$
+can be an external or an internal signal.
+\begin{figure}[H]
+    \centering
+    \tikzsetnextfilename{nonlinearities}
+    \input{./img/nonlinearities.tex}
+    \caption{Plant $G$ with nonlinearities}
+    \label{fig:nonlinearities}
+\end{figure}
+
+\paragraph{Questions}
+\begin{itemize}
+\item Can we do $f(u)$?\\
+    Possible, but \redtext{solving for $u = \cdots f(u) \cdots$ is difficult}.
+\item Can $f(.)$ be a differential operator (filter)?\\
+    \greentext{Yes}. If the filter is linear, then a solution
+    definitely exists.
+    \begin{figure}[H]
+        \centering
+        \tikzsetnextfilename{nonlin-filter}
+        \input{./img/nonlin-filter}
+        \caption{Plant $G$ with nonlinearities as filters}
+        \label{fig:nonlin-filter}
+    \end{figure}
+    The filters $F_u$ and  $F_x$ are stable dynamical systems.
+    \redtext{If they are not stable, there is a higher chance of
+    getting an infinite output $\rightarrow$ conflicts with bounded
+    output requirement.}
+\end{itemize}~
+
+If no such filters are present in the plant $G$,
+then the plant has an order of 1.\\
+
+Let's say we have an \redtext{offset in the plant input} of unknown magnitude,
+and the plant has otherwise \greentext{known parameters}.
+\begin{alignat*}{3}
+\dot{x}_p(t) &= \knownVar{a_p} x_p(t) + \knownVar{k_p} u(t) + \unknownVar{\alpha_p} \cdot 1\\
+u(t) &= \knownVar{a^*} x_p(t) + \knownVar{k^*} r(t) - \frac{ \unknownVar{\alpha(t)}}{k_p}
+\end{alignat*}
+
+Closed loop becomes
+\begin{alignat*}{3}
+\dot{x}_p(t) &= a_m x_p(t) + k_m r(t) + \tilde{\alpha}(t)
+\end{alignat*} 
+
+Error dynamics
+\begin{alignat*}{3}
+\dot{e} &= a_m e(t) + \tilde{\alpha}(t)
+\end{alignat*}
+
+Lyapunov-like function
+\begin{alignat*}{3}
+V &= \frac{1}{2} e^2 + \frac{1}{2} \tilde{\alpha}^2\\
+\dot{V} &= e \dot{e} + \tilde{\alpha} \dot{ \tilde{\alpha}} + \cdots\\
+    &= a_me^2 + \tilde{\alpha} \undertxt{\left( e + \dot{ \tilde{\alpha}} \right)}{to set to 0}
+\end{alignat*}
+
+Setting the second term to zero ensures the negative
+semi\-definite\-ness of $\dot{V}$.
+\begin{alignat}{3}
+\dot{ \tilde{\alpha}} &= -e \label{eq:integral-error}
+\end{alignat}
+
+Equation \eqn{eq:integral-error} above implies
+$u = \cdots + \int e dt + \cdots$, i.e.,
+that the controller contains an I-part.
+As a result of this, there are no steady state errors
+caused by model uncertainties.
+The controller eliminates offset at input of plant.\\
+
+Equation \eqn{eq:integral-error} is a pure integrator
+acting on control error. This is a linear controller!
+We have learned: integrators `learn' input offsets of
+the plant and correct them.\\
+
+\begin{conclusion}{darkgreen}
+Adaptive controllers can be interpreted as nonlinear
+PI controllers.
+\end{conclusion}

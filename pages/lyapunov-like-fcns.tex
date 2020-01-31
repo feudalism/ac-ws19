@@ -40,8 +40,8 @@ The second term is set to 0, because we want $V \preceq 0$ and
 we don't know all the signs of the terms.
 This will define the \textbf{adaptive law}.
 \begin{alignat*}{3}
-\dot{\tilde{\theta}}(t) &= -\bm{\Gamma} \sign{k_p} \bm{\phi}(t) e(t)\\
-\dot{\theta}(t) &= -\bm{\Gamma} \sign{k_p} \bm{\phi}(t) e(t)\\
+\dot{\tilde{\theta}}(t) &= - \sgn{k_p} \bm{\Gamma} \bm{\phi}(t) e(t)\\
+\dot{\theta}(t) &= - \sgn{k_p} \bm{\Gamma} \bm{\phi}(t) e(t)\\
 \end{alignat*}
 
 With the adaptive law, we obtain for $\dot{V}$:
@@ -51,16 +51,16 @@ With the adaptive law, we obtain for $\dot{V}$:
 
 \paragraph{Remark}
 $e(t)$ does not have to be 0 -- why?
-\begin{itemize}
-\item We do not need $\dot{V}$ to approach zero.
-\item $\dot{V}=0$ does not imply that $V$ has a limit as $t \rightarrow \infty$.
-    (although this is known, see footnote below%
-    \footnote{A function $V$ that is bounded from below $V \succeq 0$
-        and \textbf{non-increasing} $\dot{V} \preceq 0$
-        has a limit as $t \rightarrow \infty$}).
-\item In other words, $\dot{V}=0$ does not imply that the errors go to zero,
-    and vice versa.
-\end{itemize}~  
+% \begin{itemize}
+% \item We do not need $\dot{V}$ to approach zero.
+% \item $\dot{V}=0$ does not imply that $V$ has a limit as $t \rightarrow \infty$.
+%     (although this is known, see footnote below%
+%     \footnote{A function $V$ that is bounded from below $V \succeq 0$
+%         and \textbf{non-increasing} $\dot{V} \preceq 0$
+%         has a limit as $t \rightarrow \infty$}).
+% \item In other words, $\dot{V}=0$ does not imply that the errors go to zero,
+%     and vice versa.
+% \end{itemize}~  
 
 \begin{conclusion}{darkred}
 If the derivative of a function $\rightarrow 0$,
@@ -112,21 +112,4 @@ following another system.
 \centering
 \inkscape[\normalsize]{e-non-auto}{0.25}
 \end{figure}
-
-\begin{definition}{Uniformly continuous function}
-A function $f(t): \R \rightarrow \R$ 
-is uniformly continous, if\\
-$\forall \varepsilon>0:
-    \quad \exists~ \delta = \delta(\varepsilon) >0,$
-\begin{alignat*}{3}
-\forall |t_2 - t_1| &\leq \delta\\
-\Rightarrow |  f(t_2) - f(t_1) | &\leq \varepsilon
-\end{alignat*}
-\end{definition}
-
-\begin{conclusion}{darkgreen}
-\textbf{Sufficient condition for uniformly continuous functions}:
-If the derivative $\dot{f}(t)$ exists (i.e. bounded),
-$\Rightarrow f(t)$ is uniformly constant.
-\end{conclusion}
 

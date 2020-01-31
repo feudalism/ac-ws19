@@ -23,9 +23,12 @@
 \newcommand{\undertxt}[2]{\underbrace{#1}_{\textnormal{#2}}}
 \newcommand{\code}[1]{\texttt{#1}}
 \newcommand{\txtcirc}[1]{\textcircled{\footnotesize \raisebox{-.9pt} #1}}
-\newcommand{\known}[1]{\textcolor{colKnown}{#1}}
-\newcommand{\unknown}[1]{\textcolor{red}{#1}}
 \newcommand{\bounded}[1]{\underset{\textnormal{\color{blue}bd.}}{#1}}
+\newcommand\greentext[1]{\textcolor{darkgreen}{#1}}
+\newcommand\redtext[1]{\textcolor{darkred}{#1}}
+\newcommand\knownVar[1]{\textcolor{darkgreen}{#1}}
+\newcommand\unknownVar[1]{\textcolor{darkred}{#1}}
+\newcommand\measuredVar[1]{\textcolor{navyblue}{#1}}
 
 %% MATHEMATICAL OPERATORS
 \newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
@@ -57,6 +60,7 @@
 \def\inc{\ensuremath{\uparrow}}
 \def\dec{\ensuremath{\downarrow}}
 \def\R{\mathbb{R}}
+\def\Z{\mathbb{Z}}
 \def\err{\mathcal{O}}
 \def\mult{\ensuremath{\times}}
       

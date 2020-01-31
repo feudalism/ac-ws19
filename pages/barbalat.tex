@@ -1,9 +1,31 @@
+\subsection{Uniformly continuous functions}
+\label{ch:uniform-continuous}
+\begin{definition}{Uniformly continuous function}
+A function $f(t): \R \rightarrow \R$ 
+is uniformly continous, if\\
+$\forall \varepsilon>0:
+    \quad \exists~ \delta = \delta(\varepsilon) >0,$
+\begin{alignat*}{3}
+\forall |t_2 - t_1| &\leq \delta\\
+\Rightarrow |  f(t_2) - f(t_1) | &\leq \varepsilon
+\end{alignat*}
+%\label{ch:uniform-continuous}
+\end{definition}
+
+\begin{conclusion}{darkgreen}
+\textbf{Sufficient condition for uniformly continuous functions}:
+If the derivative $\dot{f}(t)$ exists (i.e. bounded),
+$\Rightarrow f(t)$ is uniformly constant.
+\end{conclusion}~
+
+\subsection{Barbalat's lemma}
+\label{ch:barbalat}
 \begin{lemma}{Barbalat Variant A}
 If $f(t): \R \rightarrow \R$
 \begin{enumerate}
 \item is a differentiable function
 \item has a finite limit as $t \rightarrow \infty$ 
-\item $\dot{f}(t)$ is uniformly constant
+\item $\dot{f}(t)$ is uniformly continuous
 \end{enumerate}
 $\Rightarrow \lim_{t \rightarrow \infty} \dot{f}(t) = 0$\\
 \end{lemma}
@@ -22,65 +44,54 @@ If $f, \dot{f} \in \mathcal{L}_\infty$
 and $f \in \mathcal{L}_2$,
 then  $|f(t)| \rightarrow 0$ as $t \rightarrow \infty$.
 \end{lemma}
-\paragraph{Closed loop stability analysis}
-By definition, $V \succeq 0$ and $\dot{V} \preceq 0$.\\
 
-Boundedness of $e(t)$
-\begin{itemize}
-\item As $V$ is bounded from below and non-increasing,
-    $V$ has a limit as $t \rightarrow \infty$.
-\item Tracking error $e(t)$ and parameter errors $ \tilde{\bm{\theta}}(t)$
-    are bounded.
-\item As $\tilde{\bm{\theta}}(t)$ bounded and $\bm{\theta}^*$ constant,
-    $\bm{\theta}(t)$ is bounded.
-\end{itemize}~
 
-Boundedness of $\dot{e}(t)$ 
-\begin{itemize}
-\item Assume $r(t)$ bounded, then
-    $x_m(t), \dot{x}_m(t)$ bounded ($\because~ M$ is stable)
-\item $x_p(t) = \bounded{e(t)} + \bounded{x_m(t)}$\\
-    $\Rightarrow x_p(t)$ bounded.
-\item $u(t)$ bounded if $\bm{\phi}(t)$ bounded.\\
-    $\bm{\phi}(t) = \matr{\bounded{r(t)} & \bounded{x_p(t)} & \bounded{f(z)}}$\\
-    (new requirement: $f(z)$ needs to be bounded).
-\item $\dot{x}_p(t) = a_p \bounded{x_p(t)} + k_p \bounded{u(t)}$\\
-    $\Rightarrow \dot{x}_p(t)$ bounded\\
-\item $\dot{e}(t) = \bounded{\dot{x}_p(t)} - \bounded{\dot{x}_m(t)}$
-    is bounded.
-\end{itemize}~
+\begin{definition}{Signal norm}
+\paragraph{Idea} quantify magnitude of a signal $x(t)$
+-- ``How big is a signal?'' -- also called the $\mathcal{L}_p$ space.\\
 
-With $\ddot{V} = 2 a_m \bounded{e} \bounded{\dot{e}}$,
-$\ddot{V}$ bounded $\rightarrow \dot{V}$ uniformly constant.\\
-
-Using Barbalat's lemma Variant A,
-\begin{itemize}
-\item $V$ is differentiable
-\item $V$ has a finite limit as $t \rightarrow \infty$ \\
-    (bounded from below and non-increasing)
-\item $\dot{V}$ is uniformly constant
-\end{itemize}
+\paragraph{Given}
 \begin{alignat*}{3}
-\Rightarrow& ~ & \lim_{t \rightarrow \infty} \dot{V} &= 0\\
-\Rightarrow& ~ & \lim_{t \rightarrow \infty} e(t) &= 0
+x(t): \R^+ \rightarrow \R^n, \quad  \quad \R^+ = [0, \infty)
 \end{alignat*}
 
-\paragraph{Signal norm, $\mathcal{L}_p$ space}
-``how big is a signal?''
-\begin{itemize}
-\item \textbf{Idea}: quantify magnitude of a signal $x(t)$\\
-    $x(t): \R^+ \rightarrow \R^n, \quad \R^+ = [0, \infty)$
-\item p-Norm
+\paragraph{p-Norm}
     \begin{alignat*}{3}
     \|x_p\| &= \left( \int_0^\infty |x(t)|^p dt \right)^{1/p}
         & \qquad p \in (0, \infty)
     \end{alignat*}
+\end{definition}~
+
+\begin{itemize}
 \item If $\bm{x}(t)$ vector, $|.|$ is the vector 2-norm,
-    `distance'.
+    `\textbf{distance}'.
 \item $\|x\|_\infty = \sup_{t \in \R^+} |x(t)| \corresponds$ 
     highest value of $\bm{x}$\\
     ``When power $\infty$, only the greatest value survives''
+\end{itemize}~
+
+\begin{definition}{Functional space}
+\begin{alignat*}{3}
+\mathcal{L}_p = \{x(t) \in \R^n : \undertxt{\| x \|_p < \infty}{exists} \}
+\end{alignat*}
+\end{definition}~
+
+\begin{example}{Functional space}
+\begin{itemize}
+\item $x(t) \in \mathcal{L}_p$: $x$ is bounded.\\
+``$x$'s highest value exists and is not infinity.''
+\item Show that $e \in \mathcal{L}_\infty$ \\
+$e$ is in $V$ and $V$ is bounded, $\therefore e \in \mathcal{L}_\infty$.
+\item Show that $e \in \mathcal{L}_2$ 
+\begin{alignat*}{3}
+\int_0^\infty \dot{V} dt &= V(\infty) - V(0), \qquad \txt{is bounded}.\\
+a_m \int_0^\infty e^2 dt &\in \mathcal{L}_\infty\\
+\Rightarrow e &\in \mathcal{L}_2
+\end{alignat*}
 \end{itemize}
+\end{example}
+
+
 
 %% TODO FILL IN
 

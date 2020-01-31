@@ -1,0 +1,44 @@
+{\footnotesize
+\begin{tikzpicture}
+\def\w{0.5cm}
+\def\h{1cm}
+
+\node (start) {};
+\node (coutu) [cout, right=0.5*\w of start] {};
+\node (comp1) [comp, right=5*\w of coutu] {};
+\node (kp) [block] at ($(coutu)!0.5!(comp1)$) {$k_p$};
+\node (cout) [cout, right=5*\w of comp1] {};
+\node (i) [block] at ($(comp1)!0.5!(cout)$) {$\int$} {};
+ 
+\node (ap) [block] at ($($(comp1)!0.5!(cout)$) + (0,0.7*\h)$) {$a_p$};
+ 
+\node (fx) [nonlin] at ($($(comp1)!0.7!(cout)$)+(0,-\h)$) {$F_x$};
+\node (filternote) [note,below=2mm of fx.south,anchor=center] {many filters};
+\node (alp2) [block] at ($($(comp1)!0.3!(cout)$)+(0,-\h)$) {$\bm{\alpha}_x^T$};
+
+\node (fu) [nonlin] at ($($(coutu)!0.3!(comp1)$)+(0,-\h)$) {$F_u$};
+\node (alp1) [block] at ($($(coutu)!0.7!(comp1)$)+(0,-\h)$) {$\bm{\alpha}_p^T$};
+ 
+\begin{scope}[arrow]
+    \draw (start) -- (coutu)  node [pos=0.1,above] {$u$}
+                  -- (kp) ;
+    \draw (kp) -- (comp1);
+    \draw (comp1) -- (i) node [pos=0.5,above] {$ \dot{x}_p$};
+    \draw (i) -- (cout) -- ++(\w,0) node [pos=1,above] {$x_p$};
+     
+    \draw (cout) |- (ap);
+    \draw (ap) -| (comp1);
+     
+    \draw (cout) |- (fx);
+    \draw (alp2) -| (comp1);
+     
+    \draw (coutu) |- (fu);
+    \draw (alp1.east) -- ++(2mm, 0) -- (comp1);
+\end{scope}
+
+\begin{scope}[vectline]
+    \draw (fx) -- (alp2);
+    \draw (fu) -- (alp1);
+\end{scope}
+\end{tikzpicture}
+}

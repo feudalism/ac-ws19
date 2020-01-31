@@ -1,0 +1,24 @@
+\paragraph{Ideal control structure} based on MRC
+\begin{alignat*}{3}
+u^*(t)
+    &= \frac{1}{k_p} \left( -a_p x_p(t) + a_m x_p(t) \right.\\
+            & \left. \qquad \qquad + k_m r(t) - \alpha_p f(z) \right)\\
+    &= \underbrace{\frac{\left( a_m - a_p \right)}{k_p}}_{a^*} x_p
+        + \underbrace{\frac{k_m}{k_p}}_{k^*} r(t)
+        + \underbrace{\frac{-\alpha_p}{k_p}}_{\alpha^*} f(z)\\
+    &= \matr{a^* & k^* & \alpha^*} \matr{x_p(t) \\ r(t) \\ f(z)}\\
+u^*(t)
+    &= \bm{\theta}^{*T} \bm{\phi}(t)
+    \numberthis \label{eq:u-ideal-nonlinear}
+\end{alignat*}
+
+\paragraph{Control law} using MRAC
+\begin{alignat*}{3}
+u(t) %&= a(t) x_p(t) + k(t) r(t) + \alpha(t) f(z) \\
+     &= \unknownVar{\matr{a(t) & k(t) & \alpha(t)}} \matr{x_p(t) \\ r(t) \\ f(z)}\\
+u(t) &= \bm{\unknownVar{\theta}}^T(t) \bm{\phi}(t)
+    \numberthis \label{eq:u-nonlinear}
+\end{alignat*}
+\redtext{$a(t),~ k(t),~ \alpha(t)$} unknown.
+
+
