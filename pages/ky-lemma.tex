@@ -1,0 +1,74 @@
+``Maier version; how to design a controller given SPR''\\
+
+\begin{lemma}{Kalman-Yakobovich Lemma}
+    \paragraph{Given}
+    \begin{itemize}
+    \item a scalar $\gamma \geq 0$
+    \item vectors $\bm{b}$ and $\bm{c}$,
+    \item an asymptotically stable matrix $\bm{A}$%
+        \footnote{positive eigenvalues}, and
+    \item a positive definite matrix $\bm{L} \succ 0$,
+    \end{itemize}
+    \begin{alignat*}{3}
+    \txt{If } H(s) &\corresponds \frac{1}{2} \gamma + \bm{c}^T (s\bm{I}-\bm{A})^{-1} \bm{b}\\
+        \Rightarrow H(s) &\txt{ is SPR}
+    \end{alignat*}~
+
+    Then, there exist
+    \begin{itemize}
+    \item a scalar $\varepsilon >0$
+    \item a vector $\bm{q}$, and
+    \item a symmetric positive definite matrix $\bm{P}$,
+    \end{itemize}
+    s.t.
+    \begin{alignat}{3}
+    \bm{A^TP + PA}   &= -\bm{qq}^T - \varepsilon \bm{L}\\
+    \bm{Pb} - \bm{c}      &= \sqrt{\gamma} \bm{q}
+    \end{alignat}
+\end{lemma}
+
+\paragraph{Using it}
+We only need $\gamma=0$ in all cases (in this course).
+Hence we can say: if $H(s)$ is SPR $\Rightarrow \exists ~ \bm{P}=\bm{P}^T>0$,\\
+s.t.
+\begin{alignat*}{3}
+\bm{A^TP + PA}   &= -\bm{Q}\\
+\bm{Pb} &= \bm{c} \qquad \txt{(s. note)}\footnotemark  \\
+\end{alignat*}%
+\footnotetext{"boundary cond., means SPR"}%
+where $\bm{Q}=\bm{Q}^T>0$
+
+\begin{lemma}{Adaptive laws based on Lyapunov}
+(For rel. degree 1 plants)\\
+Consider the dynamical system below%
+\footnote{This is the error dynamics, \redtext{not the plant}!}%
+\footnote{$z_1$ allows change of symbol with respect to the output $y(t)$}.
+\begin{alignat*}{3}
+\dot{\bm{x}}(t) &= \bm{A} \bm{x}(t) + \bm{b} \bm{\theta}^T(t) \bm{\phi}(t), \quad &\bm{x} &\in \R^n\\
+y(t) &= \bm{c}^T \bm{x}(t)      & y, z &\in \R^1\\
+z_1(t) &= k y(t)      & \bm{\phi}, \bm{\theta} &\in \R^k
+\end{alignat*}
+
+where
+\begin{itemize}
+\item $(\bm{A}, \bm{b})$ is stabilisable
+\item $(\bm{c}^T, \bm{A})$ is detectable
+\item $\bm{c}^T \left( s \bm{I} - \bm{A} \right)^{-1} \bm{b} \corresponds H(s)$
+    is SPR
+\end{itemize}~
+
+Let $\bm{\theta}(t)$ be a vector of adjustable parameters.\\
+Let $\bm{\phi}(t)$ and $z_1(t)$ be time-varying functions that can be measured.\\
+
+Then, if $\bm{\theta}(t)$ is adjusted as
+\begin{alignat}{3}
+\bm{\dot{\theta}}(t) &= - \sign{k} z_1(t) \bm{\phi}(t)
+\label{eq:adaptive-law-multistate}
+\end{alignat}
+
+$\Rightarrow$ the \greentext{equilibrium state} $\left( \bm{x}=0, \bm{\theta}=0 \right)$ 
+is \greentext{uniformly stable%
+\footnote{uniformly stable: not dependent on time nor on IC}
+ in the large%
+\footnote{in the large: IC don't matter anywhere in $\R^n$}}.
+\end{lemma}

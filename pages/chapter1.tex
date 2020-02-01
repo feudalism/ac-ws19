@@ -7,38 +7,9 @@
 \section{Positive real functions}
 \input{./pages/pr-fcn}
 
-\vfill
-\section{Appendix}
-\input{./pages/barbalat}
+\section{Kalman-Yakobovich lemma (KY)}
+\input{./pages/ky-lemma}
 
-% \subsection{Kalman-Yakobovich Lemma (KY)}
-% ``Maier version; how to design a controller given SPR''\\
-% 
-% \begin{itemize}
-% \item Given a scalar $\gamma \geq 0$, vectors $b$ and $c$,
-%     an asymptotically stable matrix $A$ %
-%     \footnote{positive eigenvalues}
-%     and a positive definite matrix $L$,
-% \item If $H(s) \corresponds \frac{1}{2} \gamma + c^T (sI-A)^{-1} b$ \\
-%     $\Rightarrow H(s)$ is SPR
-% \item Then, $\exists$ a scalar $\varepsilon >0$, a vector $q$ 
-%     and a symmetric positive definite matrix $P$, s.t.
-%     \begin{alignat*}{3}
-%     A^TP + PA   &= -qq^T - \varepsilon L\\
-%     Pb - c      &= \sqrt{\gamma} q
-%     \end{alignat*}
-% \end{itemize}
-% 
-% \paragraph{Using it}
-% We only need $\gamma=0$ in all cases (in this course).
-% Hence we can say: if $H(s)$ is SPR $\Rightarrow \exists P=P^T>0$,
-% s.t.
-% \begin{alignat*}{3}
-% A^TP + PA   &= -Q\\
-% Pb &c   \quad \txt{"boundary condition, means SPR"}
-% \end{alignat*}
-% where $Q=Q^t>0$
-% 
 % % \subsection{Lemma: ``Adaptive laws based on Lyapunov for
 % % relative degree 1 plants''}
 % % 

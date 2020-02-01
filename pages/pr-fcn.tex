@@ -1,40 +1,48 @@
-\begin{definition}{Positive real function 1}
+\begin{definition}{Positive real function I}
 A rational function $H(s): \Z \rightarrow \Z$, $s = \sigma + j\omega$ is
 positive real (PR), if
 \begin{enumerate}[label=(\roman*)]
-\item $H(s)$ is real for real $s$
-\item  $\Re\{H(s)\} \geq 0$ for  $\Re\{s\} > 0$
+\item \legendsquare{babypink} $H(s)$ is real for real $s$ 
+\item \legendsquare{babyblue} $\Re\{H(s)\} \geq 0$ for  $\Re\{s\} > 0$
 \end{enumerate}
-\end{definition}~
 
-\begin{definition}{Positive real function 2}
+\begin{figure}[H]
+    \centering
+    \inkscape[\footnotesize]{pr-fcn}{0.81}
+    \caption{Positive real mapping $s \rightarrow H(s)$}
+    \label{fig:positive-real-mapping}
+\end{figure}
+
+\end{definition}
+
+\begin{definition}{Positive real function II}
 A rational function $H(s)$ is positive real, if
-\begin{enumerate}[label=(\roman*)]
-\item $H(s)$ is analytic
-%\footnote{\textbf{analytic}: ``converges to Taylor series, somewhat smooth.''}
- in $\Re\{s\} >0$ 
-    \begin{itemize}
-    \item $H(s)$ has no poles in RHP ($\Re \set{s} > 0$)
-    \item $H(s)$ is stable
-    \end{itemize}
-\item $\Re \set{H(j\omega)} \geq 0, \quad \forall\omega \in [0, \infty]$    
-    \begin{itemize}
-        \item Nyquist of $H(s)$ is in the RHP
-        \item phase $\angle H(j\omega) \in [-90^{\circ}, +90^{\circ}]$
-        \item rel. degree of $H(s)$ is 0 or 1
-    \end{itemize}
-\item any pure imaginary pole $j\omega$ of $H(s)$ is
-    a simple pole, and the residue
-\begin{alignat*}{3}
-\lim_{s \rightarrow j\omega} \left( s - j\omega \right) H(s)
-\end{alignat*}
-    is positive semidefinite.\\
+    \begin{enumerate}[label=(\roman*)]
+    \item $H(s)$ is analytic
+    %\footnote{\textbf{analytic}: ``converges to Taylor series, somewhat smooth.''}
+     in $\Re\{s\} >0$ 
+        \begin{itemize}
+        \item $H(s)$ has no poles in RHP ($\Re \set{s} > 0$)
+        \item $H(s)$ is stable
+        \end{itemize}
+    \item $\Re \set{H(j\omega)} \geq 0, \quazod \forall\omega \in [0, \infty]$    
+        \begin{itemize}
+            \item Nyquist of $H(s)$ is in the RHP
+            \item phase $\angle H(j\omega) \in [-90^{\circ}, +90^{\circ}]$
+            \item rel. degree of $H(s)$ is 0 or 1
+        \end{itemize}
+    \item any pure imaginary pole $j\omega$ of $H(s)$ is
+        a simple pole, and the residue
+    \begin{alignat*}{3}
+    \lim_{s \rightarrow j\omega} \left( s - j\omega \right) H(s)
+    \end{alignat*}
+        is positive semidefinite.\\
 
-    Alternatively: $H(\infty) > 0$ or 
- \begin{alignat*}{3}
-\lim_{\omega \rightarrow \infty} \omega^2 \Re \set{H(j\omega)} \geq 0
-\end{alignat*}
-\end{enumerate}
+        Alternatively: $H(\infty) > 0$ or 
+     \begin{alignat*}{3}
+    \lim_{\omega \rightarrow \infty} \omega^2 \Re \set{H(j\omega)} \geq 0
+    \end{alignat*}
+    \end{enumerate}
 \end{definition}~
 
 \begin{definition}{Strictly positive real functions}
@@ -42,33 +50,76 @@ $H(s)$ is strictly positive real (SPR) if $H(s - \varepsilon)$
 is PR for some $\varepsilon > 0$.
 \end{definition}~
 
-\begin{definition}{SPR lemma}
-$H(s)$ is SPR if
-\begin{enumerate}[label=(\roman*)]
-\item $H(s)$ is Hurwitz\\
-    all poles on LHP, none are purely imaginary
-\item $\Re \set{H(j\omega)} > 0, \quad \forall \omega \in \R$\\
-    phase $\in (-90 ^{\circ}, 90 ^{\circ})$\\
-    rel. degree $\in \set{0, 1}$
-\item $H( \infty) > 0$ (positive gain for proper $H$) or 
-\begin{alignat*}{3}
-\lim_{\omega \rightarrow \infty} \omega^2 \Re \set{H(j\omega)} > 0
-\end{alignat*}
-positive gain for relative degree 1
-\end{enumerate}
-\end{definition}
-
 \paragraph{Note} relative degree of a system corresponds to
 its response delay.
+
+\begin{lemma}{SPR lemma}
+$H(s)$ is SPR if
+\begin{enumerate}[label=(\roman*)]
+    \item $H(s)$ is Hurwitz\\
+        all poles on LHP, none are purely imaginary
+    \item $\Re \set{H(j\omega)} > 0, \quad \forall \omega \in \R$
+        \begin{itemize}
+            \item Nyquist of $H(s)$ is in the RHP and \redtext{not on the imaginary axis}.
+            \item phase $\angle H(j\omega) \in (-90^{\circ}, +90^{\circ})$
+            \item rel. degree of $H(s)$ $\in \set{0,1}$
+        \end{itemize}
+        phase $\in (-90 ^{\circ}, 90 ^{\circ})$\\
+        rel. degree $\in \set{0, 1}$
+    \item $H( \infty) > 0$ (positive gain for proper $H$) or 
+        \begin{alignat*}{3}
+        \lim_{\omega \rightarrow \infty} \omega^2 \Re \set{H(j\omega)} > 0
+        \end{alignat*}
+        positive gain for relative degree 1
+\end{enumerate}
+\end{lemma}
 
 \paragraph{Discussion}
 If $H(s)$ is SPR, then so is the inverse $H^{-1}(s)$
 (stable poles, stable zeroes).\\
 
-SPR  $\rightarrow H(s)$ is stable, minimal-phase.
-I.e., only stable zerioes, because zeroes are in LHP.
+\begin{conclusion}{darkgreen}
+    SPR  $\Rightarrow H(s)$ is stable, minimal-phase.\\
+    I.e., only stable zeroes, because zeroes are in LHP.
+    \begin{itemize}
+        \item phase $\angle H(j\omega) \in (-90^{\circ}, +90^{\circ})$
+        \item rel. degree of $H(s) \leq 1 (-1, 0, 1)$
+        \item positive gain $\forall ~ \omega$
+    \end{itemize}
+\end{conclusion}~
+
+\begin{example}{PR}
+$G(s) = \frac{1}{s}$ has a single pole $s = 0$,
+with a residue of 1.
 \begin{alignat*}{3}
-\txt{rel. degr.} &\leq 1 \qquad(-1, 0, 1)\\
-\angle H(j\omega) &\in (-90 ^{\circ}, 90 ^{\circ})\\
-     & \quad \txt{ with positive gain } \forall \omega
+\real{G(j\omega)} = \real{ \frac{1}{j\omega}} = 0 \qquad \forall \omega \neq 0
 \end{alignat*}
+
+Hence, $G(s)$ is PR but not SPR,
+as $ \frac{1}{s - \varepsilon}$ has a pole
+in $\real{s} \geq 0$ for any
+$\varepsilon > 0$. 
+\end{example}
+
+\begin{example}{PR}
+$G(s) = \dfrac{1}{s + a}, a>0$ is Hurwitz.
+\begin{alignat*}{3}
+\real{G(j\omega)} &= \dfrac{a}{\omega^2 + a^2} > 0 \\
+    & \qquad
+    \forall \omega \in [0, \infty]\\
+\lim_{\omega \rightarrow \infty} \omega^2 \real{G(j\omega)}
+    &= \lim_{\omega \rightarrow \infty} \dfrac{\omega^2a}{\omega^2 + a^2}\\
+    &= a, \qquad a > 0
+\end{alignat*}
+\end{example}
+
+\begin{example}{PR}
+\begin{alignat*}{3}
+G(s) &= \dfrac{1}{s^2 + s + 1}\\
+\real{G(j\omega)} &= \dfrac{1 - \omega^2}{(1 - \omega^2)^2 + \omega^2}\\
+    &\ngtr 0 \qquad \forall \omega\\
+    &\Rightarrow G \txt{ is not PR.}
+\end{alignat*}
+\end{example}
+
+

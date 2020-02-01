@@ -1,19 +1,21 @@
 \input{./pages/nonlin-siso-theorem}
 
 We can add, arbitrarily, many `nonlinearities' $f_i(z_j)$ with
-unknown gains $\alpha_i$. The nonlinearity functions
+unknown gains $\alpha_i$ (Figure \ref{fig:nonlinearities}).
+The function $z(t)$ $z$ is a placeholder. $z(t)$
+can be an external or an internal signal.
+The nonlinearity functions
 \greentext{need not be continuous}.
-The only requirement:
+The only requirement:\\
+
 \begin{conclusion}{darkred}
-\begin{alignat*}{3}
-f_i(z_j) \in \mathcal{L}_\infty
-\end{alignat*}
-Nonlinearities are bounded at all times%
+    \begin{alignat*}{3}
+        f_i(z_j) \in \mathcal{L}_\infty
+    \end{alignat*}
+    Nonlinearities are bounded at all times%
     \footnote{For the boundedness of $u(t)$ and therefore $\dot{e}(t)$}.
 \end{conclusion}
 
-\paragraph{The function $z(t)$} $z$ is a placeholder. $z(t)$
-can be an external or an internal signal.
 \begin{figure}[H]
     \centering
     \tikzsetnextfilename{nonlinearities}
@@ -27,7 +29,8 @@ can be an external or an internal signal.
 \item Can we do $f(u)$?\\
     Possible, but \redtext{solving for $u = \cdots f(u) \cdots$ is difficult}.
 \item Can $f(.)$ be a differential operator (filter)?\\
-    \greentext{Yes}. If the filter is linear, then a solution
+    \greentext{Yes} (Figure \ref{fig:nonlin-filter}).
+    If the filter is linear, then a solution
     definitely exists.
     \begin{figure}[H]
         \centering

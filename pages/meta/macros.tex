@@ -2,6 +2,9 @@
 %\newcommand{\setdeflang}{\selectlanguage{ngerman}}
 
 %% COMMANDS - graphics
+\newcommand{\legendsquare}[1]{
+\fcolorbox{white}{#1}{\rule{0pt}{5pt}\rule{5pt}{0pt}}
+}
 % #1: file name without extension
 % #2: width in percentage of page text width
 % #3: style options, e.g. \normalsize
@@ -52,6 +55,7 @@
 \newcommand{\intdt}[3]{\ensuremath{\int_{#1}^{#2} #3 ~dt}}
 % Sum over k {lowerbound}{upperbound}
 \newcommand{\sumk}[2]{ \sum_{#1}^{#2} }
+\newcommand{\real}[1]{\Re\left\{#1\right\}}
 
 
 %% SYMBOLS
