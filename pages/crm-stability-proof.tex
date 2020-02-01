@@ -1,0 +1,56 @@
+\begin{alignat*}{3}
+\dot{x}_m^c(t) &= a_m x_m^c(t) + k_m r(t) - le^c(t)
+    \tag{\ref{eq:M-crm}}\\
+\dot{x}_p(t) &= a_p x_p(t) + k_p u(t) 
+    \tag{\ref{eq:G-linear}}
+\end{alignat*}
+
+Input is
+\begin{alignat*}{3}
+u &= \matr{a(t) & k(t)} \matr{x_p(t) \\ r(t)}% =  a(t) x_p(t) + k(t) r(t)\\
+    = \bm{\theta}^T(t) \bm{\phi}(t) 
+\end{alignat*}
+
+\begin{alignat*}{3}
+\dot{x}_p(t) &= a_m x_p(t) + k_m r(t) + k_p \bm{\theta}^T(t) \bm{\phi}(t)
+\end{alignat*}
+
+Tracking error
+\begin{alignat*}{3}
+\dot{e}^c(t) &= \dot{x}_p(t) - \dot{x}_m^c(t)\\
+    &= \left( a_m + l \right) e^c(t) + k_p \bm{\theta}^T(t) \bm{\phi}(t)
+\end{alignat*}
+
+Lyapunov-like function
+\begin{alignat*}{3}
+V(e^c, \bm{\theta})
+    &= \frac{1}{2} (e^c)^2 + \frac{1}{2} \Gamma^{-1} |k_p| \bm{\theta}^T(t) \bm{\theta}(t)\\
+\dot{V}
+    &= e^c \dot{e}^c + \Gamma^{-1} |k_p| \bm{\theta}^T \bm{\dot{\theta}} = \cdots\\
+    &= \left( a_m + l \right) (e^c)^2\\
+    & \quad     + \underbrace{e^c k_p \bm{\theta} \bm{ \phi}
+        + \Gamma^{-1} |k_p| \bm{\theta}^T \bm{\dot{\theta}}}_{ \overset{!}{=} 0}\\
+\dot{V} &= \left( a_m + l \right) (e^c)^2 \leq 0, \qquad l < 0
+\end{alignat*}
+
+Adaptive law
+\begin{alignat*}{3}
+\dot{\bm{\theta}} &= -\Gamma \sign{k_p} e^c \bm{\phi}
+\end{alignat*}
+
+\paragraph{Proof} as before.
+$e^c(t) \rightarrow 0$ for $t \rightarrow \infty$ %
+\footnote{We assume here that $e^c(t) \rightarrow 0$ follows from
+$e^o(t) \rightarrow 0$. In actuality, though, $e^o(t)$ can't
+be proven for special functions. However, these cases
+are usually not relevant to engineering/industry.
+Therefore, \redtext{strictly speaking}, we can't actually assume
+that $e^c(t) \rightarrow 0$}.
+
+\paragraph{Questions}
+\begin{itemize}
+\item How do we show increased performance?\\
+    (using $\| e^c(t) \|_{ \mathcal{L}_2}$ as a performance criterion)
+\item How do we show that the oscillations decrease?
+\end{itemize}
+

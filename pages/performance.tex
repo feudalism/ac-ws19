@@ -8,22 +8,32 @@ Disturbances    & Robustness
 
 \begin{itemize}
 \item Increasing $\gamma$, we are unhappy with the
-    oscillations of our parameters $\bm{\theta}$
+    \redtext{oscillations of our parameters $\bm{\theta}$}
     and therefore with the oscillations of $u(t)$.
 \item We have no clue what the adaptive closed loop
     will do between $t=0$ and $t=\infty$ other than boundedness
 \end{itemize}
 
-\paragraph{Now} Deal with transient response
-\paragraph{Idea} Adaptation changes with signals
-\begin{alignat*}{3}
-\dot{\theta} &= - \sgn{\varepsilon} \measuredVar{e \gamma} \phi
-\end{alignat*}
-where the value of $e$ and $\gamma$ are changeable.\\
-$\Rightarrow$ we can alter the transient with $\gamma$ (leads to oscillations),
-\greentext{or we can change $e(t)$}.
+\subsection{Adaptation with a closed loop reference model}
+\input{./pages/crm}
 
-\paragraph{So far}
+\subsection{Stability proof}
+\input{./pages/crm-stability-proof}
+
+\subsection{Analysing transient performance}
+Check the performance criterion $ \mathcal{L}_2$-norm of $e^c$
 \begin{alignat*}{3}
-\dot{x}_m^o(t) &= 
+\int_0^\infty \dot{V}(e^c, \bm{\theta}) d\tau &= V(\infty) - V(0)\\
+-| a_m + l |\int_0^\infty {e^c}^2 d\tau &= V(\infty) - V(0)\\
+V(0) &= \underbrace{V(\infty)}_{\geq_0} + |a_m + l| \cdot \| e^c \|_2^2\\% \int_0^\infty (e^c)^2 d\tau\\
+V(0) &\geq |a_m + l| \cdot \| e^c \|_2^2 \\
+\| e^c \|_2 &\leq \sqrt{\dfrac{V(0)}{|a_m + l|}}
 \end{alignat*}
+
+\begin{conclusion}{darkgreen}
+\begin{alignat}{3}
+\| e^c \|_2^2 &\leq \frac{1}{2} \dfrac{(e^c(0))^2 + \frac{|k_p|}{\gamma} \bm{\theta}^T(0) \bm{\theta}(0)}{|a_m + l|} 
+    \label{eq:ec-2norm}
+\end{alignat}
+\end{conclusion}
+

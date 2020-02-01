@@ -1,0 +1,36 @@
+\paragraph{Now} Deal with transient response
+\paragraph{Idea} Adaptation changes with signals
+\begin{alignat*}{3}
+    \dot{\theta} &= - \sgn{\varepsilon} \measuredVar{e \gamma} \phi
+\end{alignat*}
+where the value of $e$ and $\gamma$ are changeable.\\
+$\Rightarrow$ we can alter the transient with $\gamma$ (leads to oscillations),
+\greentext{or we can change $e(t)$}.
+
+\paragraph{So far} Open loop reference model (ORM)
+\begin{alignat*}{3}
+\dot{x}_m^o(t) &= a_m x_m^o(t) + k_m r(t)
+    \tag{\ref{eq:M}}
+\end{alignat*}
+
+\paragraph{Now} Closed loop reference model (CRM)
+\begin{alignat}{3}
+\dot{x}_m^c(t) &= a_m x_m^c(t) + k_m r(t) - l e^c(t)
+    \label{eq:M-crm}
+\end{alignat}~
+
+ORM $=$ CRM if $l=0$.\\
+
+``CRM is observer-like; $M$ helps $G$ by moving towards
+$G$ and retreating to original position.''\\
+\redtext{Through the movement, the reference model now
+has a different behaviour ($M \rightarrow M'$!)
+and the plant $P$ is trying to follow $M'$.}\\
+
+\begin{variables}
+\gamma  & learning effect\\
+        & decreasing $\gamma$ helps $P$ follow $M'$,\\
+        & but the learning becomes slower\\
+l       & movement to $P$ \\
+        & increasing $l$ helps $P$ follow $M'$
+\end{variables}
