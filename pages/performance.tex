@@ -1,0 +1,29 @@
+Performance criteria:
+\begin{center}
+\begin{tabu} to \columnwidth {cc}
+Performance & Noise\\
+Disturbances    & Robustness
+\end{tabu}
+\end{center}~
+
+\begin{itemize}
+\item Increasing $\gamma$, we are unhappy with the
+    oscillations of our parameters $\bm{\theta}$
+    and therefore with the oscillations of $u(t)$.
+\item We have no clue what the adaptive closed loop
+    will do between $t=0$ and $t=\infty$ other than boundedness
+\end{itemize}
+
+\paragraph{Now} Deal with transient response
+\paragraph{Idea} Adaptation changes with signals
+\begin{alignat*}{3}
+\dot{\theta} &= - \sgn{\varepsilon} \measuredVar{e \gamma} \phi
+\end{alignat*}
+where the value of $e$ and $\gamma$ are changeable.\\
+$\Rightarrow$ we can alter the transient with $\gamma$ (leads to oscillations),
+\greentext{or we can change $e(t)$}.
+
+\paragraph{So far}
+\begin{alignat*}{3}
+\dot{x}_m^o(t) &= 
+\end{alignat*}

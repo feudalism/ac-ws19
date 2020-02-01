@@ -22,8 +22,10 @@
     \end{itemize}
     s.t.
     \begin{alignat}{3}
-    \bm{A^TP + PA}   &= -\bm{qq}^T - \varepsilon \bm{L}\\
+    \bm{A^TP + PA}   &= -\bm{qq}^T - \varepsilon \bm{L}
+        \label{eq:ky-lemma-atp}\\
     \bm{Pb} - \bm{c}      &= \sqrt{\gamma} \bm{q}
+        \label{eq:ky-lemma-bc}
     \end{alignat}
 \end{lemma}
 
@@ -41,12 +43,16 @@ where $\bm{Q}=\bm{Q}^T>0$
 \begin{lemma}{Adaptive laws based on Lyapunov}
 (For rel. degree 1 plants)\\
 Consider the dynamical system below%
-\footnote{This is the error dynamics, \redtext{not the plant}!}%
-\footnote{$z_1$ allows change of symbol with respect to the output $y(t)$}.
+\footnote{This refers to the error dynamics, \redtext{not the plant}!}%
+\footnote{$z_1$ allows change of symbol with respect to the output $y(t)$}%
+\footnote{$x \in \R^n,
+        \qquad y, z \in \R^1,
+        \qquad \bm{\phi}, \bm{\theta} \in \R^k$}.
 \begin{alignat*}{3}
-\dot{\bm{x}}(t) &= \bm{A} \bm{x}(t) + \bm{b} \bm{\theta}^T(t) \bm{\phi}(t), \quad &\bm{x} &\in \R^n\\
-y(t) &= \bm{c}^T \bm{x}(t)      & y, z &\in \R^1\\
-z_1(t) &= k y(t)      & \bm{\phi}, \bm{\theta} &\in \R^k
+\dot{\bm{x}}(t) &= \bm{A} \bm{x}(t) + \bm{b} \bm{\theta}^T(t) \bm{\phi}(t)
+    \numberthis \label{eq:G-mimo}\\
+y(t) &= \bm{c}^T \bm{x}(t)     \\
+z_1(t) &= k y(t) 
 \end{alignat*}
 
 where
@@ -72,3 +78,42 @@ is \greentext{uniformly stable%
  in the large%
 \footnote{in the large: IC don't matter anywhere in $\R^n$}}.
 \end{lemma}
+
+\paragraph{Proof}
+Since $H(s)$ is SPR, it follows from
+the KY-lemma that $\exists ~ \bm{P} = \bm{P}^T > 0$,
+such that
+\begin{alignat*}{3}
+\bm{A^TP + PA}   &= -\bm{Q}, \quad \bm{Q} = \bm{Q}^T > 0
+    \tag{\ref{eq:ky-lemma-atp}}\\
+\bm{Pb} &= \bm{c} 
+    \tag{\ref{eq:ky-lemma-bc}}
+\end{alignat*}%
+
+Let $V$ be a positive definite function
+\begin{alignat*}{3}
+V &= \bm{x}^T \bm{P} \bm{x} + \dfrac{1}{|k|} \bm{\theta}^T \bm{\theta}\\
+\dot{V} &= \bm{x}^T \left(  \bm{PA + A^TP} \right) \bm{x}\\
+        &\quad + 2 \bm{x^T Pb \theta^T \phi} - 2 \bm{\theta^T} y \bm{\phi}\\
+    &= - \bm{x^TQx} \leq 0
+\end{alignat*}
+
+Therefore, the origin of the system \eqn{eq:G-mimo}
+together with the adaptive law \eqn{eq:adaptive-law-multistate}
+is stable.
+
+\paragraph{Discussion}
+We now have a simple tool for finding adaptive laws
+with error dynamics below \eqn{eq:error-dynamics-nonlinear}, where $M(s)$ is SPR,
+stabilisable and detectable,
+and the adaptive laws are defined as in \eqn{eq:adaptive-law-eps}
+\begin{alignat*}{3}
+e(t) &= \dfrac{1}{ \unknownVar{k^*}} \knownVar{M(s)} \matr{ \unknownVar{ \tilde{\bm{\theta}}^T \bm{\phi}}}
+    \tag{\ref{eq:error-dynamics-nonlinear}}
+\dot{\bm{\theta}}(t) &= - \sign{\varepsilon} e \bm{\Gamma} \bm{\phi}
+    \numberthis \label{eq:adaptive-law-eps}
+\end{alignat*}
+
+If $M(s)$ has a relative degree of 1, it is obvious that $e(t) \rightarrow 0$
+for $t \rightarrow \infty$%
+\footnote{Why?}.
