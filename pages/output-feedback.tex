@@ -1,3 +1,4 @@
+\section{Output feedback adaptive control}
 Let $M(s)$ be a linear time-invariant,
 asymptotically stable reference model, with I/O
 $\set{r(.), y_m(.)}$.
@@ -27,18 +28,17 @@ We know
     $\Rightarrow$ min. phase%
     \footnote{there is no standard definition for minimal phase},
     no inverse response
-\end{enumerate}~
+\end{enumerate}
 
 \paragraph{Minimal phase systems}
-%%TODO
-todo
+\input{./pages/min-phase-systems}
 
 \paragraph{Solution in three parts}
 \begin{enumerate}
 \item $k_p$ unknown
 \item $Z_p$ unknown
  \item $R_p$ unknown
-\end{enumerate}
+\end{enumerate}~
 
 In each case
 \begin{enumerate}[label=\alph*)]
@@ -54,3 +54,7 @@ In each case
 \item Show that $e \rightarrow 0$ for $t \rightarrow \infty$ 
     (Barbalat's lemma)
 \end{enumerate}
+
+\subsection{$k_p$ unkown}
+\input{./pages/ofac-kp}
+
