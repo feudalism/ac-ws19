@@ -37,3 +37,65 @@ V(0) &\geq |a_m + l| \cdot \| e^c \|_2^2 \\
 \end{alignat}
 \end{conclusion}
 
+\paragraph{Discussion}
+\begin{itemize}
+\item Increasing $\gamma$ reduces $\| e^c \|_{\mathcal{L}_2}$
+    depending on the parameter errors $ \tilde{\bm{\theta}}$ 
+\item Increasing the value of $l$ reduces $\| e^c \|_{\mathcal{L}_2}$\\
+    also from $e^c(0)$
+\end{itemize}
+
+\subsection{Analysing the signal oscillations}
+$\mathcal{L}_2$-norm of $\dot{k}$
+\begin{alignat*}{3}
+\dot{k} &= -\gamma \sign{k_p} e^c r(t)\\
+\int_0^\infty |\dot{k}|^2 d\tau &= \gamma^2 \int_0^\infty (e^c)^2r^2 d\tau\\
+    & \qquad \left( r(t) \leq \| r \|_{\mathcal{L}_\infty} \right)\\
+    &\leq \gamma^2 \| r \|^2_{\mathcal{L}_\infty} \int_0^\infty (e^c)^2 d\tau\\
+    &\leq \gamma^2 \| r \|^2_{\mathcal{L}_\infty} \| e^c \|^2_{\mathcal{L}_2}\\
+\end{alignat*}
+
+\begin{conclusion}{darkgreen}
+\begin{alignat*}{3}
+\| \dot{k} \|_2 &\leq \gamma \| r \|_{\mathcal{L}_\infty}
+    \sqrt{\dfrac{V(0)}{|a_m + l|}}
+\end{alignat*}
+\end{conclusion}
+
+Increasing $\gamma$ or reducing $l$ causes $\dot{k}$ to decrease in magnitude.\\
+
+$\mathcal{L}_2$-norm of $\dot{\theta}$
+\begin{alignat*}{3}
+\dot{\theta} &= -\gamma \sign{k_p} e^c x_p(t)\\
+    &= -\gamma \sign{k_p} e^c \left( e^c + x_m(t) \right)\\
+|\dot{\theta}|^2 &= \gamma^2 (e^c)^2 \left( e^c + x_m(t) \right)^2\\
+    & \qquad \qquad  \measuredVar{ (a+b)^2 \leq 2a^2 + 2b^2} \\
+    &\leq 2 \gamma^2 (e^c)^2 \left[ (e^c)^2 (e^c)^2 + x_m^2 \right]\\
+\int_0^\infty |\dot{\theta}|^2 d\tau
+    &\leq 2\gamma^2 \left[ \int_0^\infty (e^c)^2 (e^c)^2 d\tau +
+        \int_0^\infty (e^c)^2 x_m^2 d\tau \right]\\
+    &\vdots\\
+\end{alignat*}
+
+\begin{conclusion}{darkgreen}
+\begin{alignat*}{3}
+    & \quad  \int_0^\infty |\dot{\theta}|^2 d\tau  \\
+&\leq 2\gamma^2 \frac{V(0)}{|a_m+l|}
+    \left[ V(0) \left( 2 + \frac{l^2}{|a_m| \cdot |a_m + l|} \right) \right. \\
+         & \qquad \qquad \qquad \qquad 
+         + 2 \| \dot{x}_m \|^2_{\mathcal{L}_\infty} \biggr]
+\end{alignat*}
+\end{conclusion}
+
+\paragraph{Discussion}
+\begin{itemize}
+\item $l$ reduces contribution of the ORM
+    $\| \dot{x}_m(t) \|_{\mathcal{L}_\infty}$ on $\| \dot{\theta} \|_{\mathcal{L}_2}$ 
+\item $l$ has no clear effect on the contributions of $V(0)$.
+\item $\gamma$ always increases the oscillations, s.
+    $\| \dot{\theta} \|_{\mathcal{L}_2}$
+\end{itemize}
+
+
+
+

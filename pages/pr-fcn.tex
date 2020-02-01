@@ -20,12 +20,12 @@ A rational function $H(s)$ is positive real, if
     \begin{enumerate}[label=(\roman*)]
     \item $H(s)$ is analytic
     %\footnote{\textbf{analytic}: ``converges to Taylor series, somewhat smooth.''}
-     in $\Re\{s\} >0$ 
+     in $\real{s} >0$ 
         \begin{itemize}
-        \item $H(s)$ has no poles in RHP ($\Re \set{s} > 0$)
+        \item $H(s)$ has no poles in RHP ($\real{s} > 0$)
         \item $H(s)$ is stable
         \end{itemize}
-    \item $\Re \set{H(j\omega)} \geq 0, \quazod \forall\omega \in [0, \infty]$    
+    \item $\real{H(j\omega)} \geq 0, \quad \forall\omega \in [0, \infty]$    
         \begin{itemize}
             \item Nyquist of $H(s)$ is in the RHP
             \item phase $\angle H(j\omega) \in [-90^{\circ}, +90^{\circ}]$
@@ -39,8 +39,8 @@ A rational function $H(s)$ is positive real, if
         is positive semidefinite.\\
 
         Alternatively: $H(\infty) > 0$ or 
-     \begin{alignat*}{3}
-    \lim_{\omega \rightarrow \infty} \omega^2 \Re \set{H(j\omega)} \geq 0
+    \begin{alignat*}{3}
+        \lim_{\omega \rightarrow \infty} \omega^2 \real{H(j\omega)} \geq 0
     \end{alignat*}
     \end{enumerate}
 \end{definition}~
@@ -58,7 +58,7 @@ $H(s)$ is SPR if
 \begin{enumerate}[label=(\roman*)]
     \item $H(s)$ is Hurwitz\\
         all poles on LHP, none are purely imaginary
-    \item $\Re \set{H(j\omega)} > 0, \quad \forall \omega \in \R$
+    \item $\real{H(j\omega)} > 0, \quad \forall \omega \in \R$
         \begin{itemize}
             \item Nyquist of $H(s)$ is in the RHP and \redtext{not on the imaginary axis}.
             \item phase $\angle H(j\omega) \in (-90^{\circ}, +90^{\circ})$
@@ -68,7 +68,7 @@ $H(s)$ is SPR if
         rel. degree $\in \set{0, 1}$
     \item $H( \infty) > 0$ (positive gain for proper $H$) or 
         \begin{alignat*}{3}
-        \lim_{\omega \rightarrow \infty} \omega^2 \Re \set{H(j\omega)} > 0
+        \lim_{\omega \rightarrow \infty} \omega^2 \real{H(j\omega)} > 0
         \end{alignat*}
         positive gain for relative degree 1
 \end{enumerate}

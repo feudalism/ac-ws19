@@ -23,13 +23,13 @@ Tracking error
 
 Lyapunov-like function
 \begin{alignat*}{3}
-V(e^c, \bm{\theta})
-    &= \frac{1}{2} (e^c)^2 + \frac{1}{2} \Gamma^{-1} |k_p| \bm{\theta}^T(t) \bm{\theta}(t)\\
+V(e^c, \tilde{\bm{\theta}})
+    &= \frac{1}{2} (e^c)^2 + \frac{1}{2} \Gamma^{-1} |k_p| \bm{\tilde{\theta}}^T(t) \bm{ \tilde{\theta}}(t)\\
 \dot{V}
-    &= e^c \dot{e}^c + \Gamma^{-1} |k_p| \bm{\theta}^T \bm{\dot{\theta}} = \cdots\\
+    &= e^c \dot{e}^c + \Gamma^{-1} |k_p| \tilde{\bm{\theta}}^T \bm{\dot{ \tilde{\theta}}} = \dots\\
     &= \left( a_m + l \right) (e^c)^2\\
-    & \quad     + \underbrace{e^c k_p \bm{\theta} \bm{ \phi}
-        + \Gamma^{-1} |k_p| \bm{\theta}^T \bm{\dot{\theta}}}_{ \overset{!}{=} 0}\\
+    & \quad     + \underbrace{e^c k_p \tilde{\bm{\theta}} \bm{ \phi}
+        + \Gamma^{-1} |k_p| \tilde{\bm{\theta}}^T \bm{\dot{ \tilde{\theta}}}}_{ \overset{!}{=} 0}\\
 \dot{V} &= \left( a_m + l \right) (e^c)^2 \leq 0, \qquad l < 0
 \end{alignat*}
 

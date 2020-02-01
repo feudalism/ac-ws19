@@ -34,14 +34,9 @@
 \newcommand\measuredVar[1]{\textcolor{navyblue}{#1}}
 
 %% MATHEMATICAL OPERATORS
-\newcommand{\set}[1]{\ensuremath{\left\lbrace #1 \right\rbrace}}
-\newcommand{\paren}[1]{\ensuremath{\left( #1 \right)}}
-\newcommand{\squareb}[1]{\ensuremath{\left[ #1 \right]}}
+\newcommand{\set}[1]{\left\lbrace #1 \right\rbrace}
 \newcommand{\matr}[1]{\begin{bmatrix}#1\end{bmatrix}}
-\newcommand{\modl}[1]{\ensuremath{\left\lvert #1 \right\rvert}}
-\newcommand{\norm}[1]{\ensuremath{\left\lVert #1 \right\rVert}}
-\newcommand{\inv}[1]{\ensuremath{#1^{-1}}}
-\newcommand{\quadr}[2]{\ensuremath{#1^T #2 #1}}
+\newcommand{\modl}[1]{\left\lvert #1 \right\rvert}
 \newcommand{\pdein}[2]{\dfrac{\partial #1}{\partial #2}}
 \newcommand{\pde}[1]{\dfrac{\partial}{\partial #1}}
 \newcommand{\evalat}[2]{\left. #1 \right\rvert_{#2}}
@@ -51,10 +46,6 @@
 \DeclareMathOperator{\spn}{span}
 \DeclareMathOperator{\sign}{sgn}
 \newcommand{\sgn}[1]{\sign \left( #1 \right)}
-% Integral over time int{lowerbound}{upperbound}{inttegral}
-\newcommand{\intdt}[3]{\ensuremath{\int_{#1}^{#2} #3 ~dt}}
-% Sum over k {lowerbound}{upperbound}
-\newcommand{\sumk}[2]{ \sum_{#1}^{#2} }
 \newcommand{\real}[1]{\Re\left\{#1\right\}}
 
 
@@ -65,6 +56,7 @@
 \def\dec{\ensuremath{\downarrow}}
 \def\R{\mathbb{R}}
 \def\Z{\mathbb{Z}}
+\def\C{\mathbb{C}}
 \def\err{\mathcal{O}}
 \def\mult{\ensuremath{\times}}
       

@@ -1,0 +1,56 @@
+Let $M(s)$ be a linear time-invariant,
+asymptotically stable reference model, with I/O
+$\set{r(.), y_m(.)}$.
+$r$ is uniform, bounded, piecewise continuous function of time.
+The plant $G$ is defined such that
+\begin{alignat*}{3}
+G(s) &= k_p \dfrac{Z_p(s)}{R_p(s)}
+\end{alignat*}
+
+\begin{itemize}
+\item $Z_p, R_p$ are monic%
+    \footnote{monic: coefficient of the highest order is 1, e.g. $s^2+ 2s + 1$}
+    polynomials of orders $n-1$ and $n$ 
+\item $G(s)$ is controllable, observable $\Leftrightarrow Z_p, R_p$ are 
+    coprime%
+    \footnote{coprime: no cancellations, i.e. no common roots}
+    polynomials
+\end{itemize}~
+
+We know
+\begin{enumerate}
+\item sign of high-frequency gain $k_p$ 
+\item upper bound $n$ on the order of $G(s)$ 
+\item relative degree $n^*$ %
+    \footnote{in this course, we only handle cases where $n^* = 1$}
+\item zeroes of $Z_p(s)$ lie in $\C^-$\\
+    $\Rightarrow$ min. phase%
+    \footnote{there is no standard definition for minimal phase},
+    no inverse response
+\end{enumerate}~
+
+\paragraph{Minimal phase systems}
+%%TODO
+todo
+
+\paragraph{Solution in three parts}
+\begin{enumerate}
+\item $k_p$ unknown
+\item $Z_p$ unknown
+ \item $R_p$ unknown
+\end{enumerate}
+
+In each case
+\begin{enumerate}[label=\alph*)]
+\item ``Matching conditions''\\
+    Show that $\exists$ parameters $\theta^* = $ const.,
+    such that the closed loop behaves exactly as the reference
+\item Error dynamics
+    Derive error model as 
+    \begin{alignat*}{3}
+    e &= \frac{1}{k^*} M(s) \left[ \tilde{\theta}^T \phi \right]
+    \end{alignat*}
+\item Use KY-lemma
+\item Show that $e \rightarrow 0$ for $t \rightarrow \infty$ 
+    (Barbalat's lemma)
+\end{enumerate}
