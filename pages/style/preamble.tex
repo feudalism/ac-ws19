@@ -128,7 +128,7 @@
 
 
 %% PROGRAMMING
-%	\usepackage{xstring}
+	\usepackage{xstring}
 
 
 %% LISTS
@@ -170,14 +170,17 @@
 		
 		
 %% DOCUMENT PROPERTIES
-%	\usepackage{hyperref}
-%	\hypersetup{	pdftitle = {Adaptive Control Notes},
-%					pdfauthor = {S},
-%%					pdfstartview = {XYZ null null 1.0},
-%					bookmarksnumbered = true,
-%					bookmarksopen = true,
-%					colorlinks,
-%					linkcolor={black!30!blue},
-%					citecolor={blue},
-%					urlcolor={red},
-%					}
+% Run hyperref only on complete document!
+\IfEndWith*{\jobname}{all}{
+    \usepackage{hyperref}
+    \hypersetup{	pdftitle = {Adaptive Control Notes},
+                    pdfauthor = {S},
+                    pdfstartview = {XYZ null null 1.0},
+                    bookmarksnumbered = true,
+                    bookmarksopen = true,
+                    colorlinks,
+                    linkcolor={black!30!blue},
+                    citecolor={blue},
+                    urlcolor={red},
+                    }
+}{}

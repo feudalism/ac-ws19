@@ -44,7 +44,7 @@ main.pdf
 *.fdb_latexmk
 *.synctex
 *.synctex(busy)
-*.synctex.gz
+*.gz
 *.synctex.gz(busy)
 *.pdfsync
 
