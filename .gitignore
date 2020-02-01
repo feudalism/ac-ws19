@@ -3,6 +3,8 @@
 *.vim
 *.tex~
 *.un~
+main_all.tex
+main.pdf
 
 ## Core latex/pdflatex auxiliary files:
 *.aux
