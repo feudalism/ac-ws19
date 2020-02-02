@@ -1,0 +1,33 @@
+\def\h{1.5cm}
+\def\w{1cm}
+\begin{tikzpicture}[
+    block/.append style={minimum width=2*\w, text width=2*\w},
+    signal/.style = {font=\footnotesize},
+]
+
+\node (start) {};
+\node (cout) [cout,right=0.5\w of start] {};
+\node (comp) [comp,right=4.5*\w of cout.east] {};
+
+\node (ff) [block]
+    at ($(cout.east)!0.4!(comp.west)$) {$k_m \dfrac{Z_m(s)}{R_m(s)}$};
+
+\node (kt) [block, minimum width=0.9*\w, text width=0.9*\w]
+    at ($($(cout)!0.2!(comp)$)+(0,-\h)$) {$k(t)$};
+\node (kp) [block] at ($($(cout)!0.7!(comp)$)+(0,-\h)$) {$k_p \dfrac{Z_m(s)}{R_m(s)}$};
+
+\begin{scope}[arrow]
+    \draw (start) -- (ff) node [pos=-0.2,above] {$r$};
+    \draw (ff) -- (comp) node [pos=0.85,above] {-}
+        node [pos=0.35, above, signal] {$y_m(t)$};
+    \draw (comp) -- ++(0.5*\w,0) node [pos=1.2,above,
+        signal] {$e_y(t)$};
+    
+    \draw (cout) |- (kt);
+    \draw (kt) -- (kp);
+    \draw (kp) -| (comp)
+        node [pos=0.8,right, signal] {$y_p(t)$};
+\end{scope}
+
+\adaptiveBlock{kt}
+\end{tikzpicture}

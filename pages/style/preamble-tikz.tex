@@ -16,6 +16,15 @@
 	vectline/.style={arrow,line width=1.8pt},		
 	force/.style={line width=2pt,red,arrow},
 		}
+
+\newcommand{\adaptiveBlock}[1]{
+    \draw[->,on background layer] 
+    ([yshift=-5pt] #1.south west) -- ([yshift=5pt] #1.north east);
+}
+
+\newcommand{\bwAbove}[4]{
+    ($($(#1)!#3!(#2)$)+(0,#4)$)
+}
 	
 % % Control blocks
 \tikzset{

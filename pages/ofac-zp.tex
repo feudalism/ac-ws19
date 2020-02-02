@@ -1,0 +1,157 @@
+\begin{alignat*}{3}
+G = \unknownVar{k_p} \dfrac{\unknownVar{Z_p(s)}}{\knownVar{R_p(s)}}
+\qquad & M &= \knownVar{k_m \dfrac{Z_m(s)}{R_p(s)}}
+\end{alignat*}
+``We are happy with the plant poles $R_p(s)$''
+
+\subsubsection*{Matching condition}
+\paragraph{Problem}
+\redtext{Zeroes cannot be changed by feedback}%
+    \footnote{In feedback, poles can be moved, but 
+    zeroes have to be cancelled out}
+
+\paragraph{Solution}
+Design an \greentext{adaptive feedforward controller}
+to cancel plant zeroes and introudce model zeroes
+
+\begin{conclusion}{darkgreen}
+\begin{alignat*}{3}
+C^*(s) \overset{!}{=} \dfrac{k_m}{k_p} \cdot \dfrac{Z_m(s)}{Z_p(s)}
+\end{alignat*}
+Note%
+\footnote{? ``unparametrised, doesn't lead to error dynamics ?}
+\end{conclusion}
+
+\begin{figure}[H]
+    \centering
+    \tikzsetnextfilename{ofac-zp-ff}
+    \input{./img/ofac-zp-ff.tex}
+\end{figure}
+
+\begin{alignat*}{3}
+C^*(s) G(s) \overset{!}{=} M(s)
+\end{alignat*}
+
+This is a structure that we know produces a ``linear in the
+parameters error dynamics''.
+
+\begin{figure}[H]
+    \centering
+    \tikzsetnextfilename{ofac-zp-filter}
+    \input{./img/ofac-zp-filter.tex}
+\end{figure}
+
+\begin{alignat*}{3}
+\theta_1(t), \phi_1(t) &\in \R^{n-1}\\
+k(t), l &\in \R^1
+\end{alignat*}
+
+The filter $F(s)$ can be described by
+\begin{alignat*}{3}
+\dot{ \phi_1}(t) &= \Lambda \phi_1(t) + lu(t)
+\end{alignat*}
+
+where $\Lambda$ is a $(n - 1) \times (n - 1)$
+asymptotically stable matrix.
+$\left[ \Lambda, l \right]$ is controllable
+$\corresponds \phi_i$ is linear independent.
+
+\paragraph{State controllability}
+implies that any end state $x_f$ is reachable
+given an initial state $x_0$.
+However, this \redtext{doesn't mean that
+the state remains at $x_f$}.
+A prerequisite for state controllability is
+that the states must be \greentext{linear independent},
+i.e. enables free movement anywhere.\\
+
+$ \phi_i$ linear independent $\Rightarrow \theta_i$
+amount needed. If not:
+\begin{itemize}
+\item Reduced number of $\theta$ elements
+\item Reduced information
+\end{itemize}
+
+The input $u$ is
+\begin{alignat*}{3}
+u(t) &= \theta_1^T(t) \phi_1(t) + k(t) r(t)
+\end{alignat*}
+
+Assume constants for $ \theta_1 = \theta_{1c}$
+and $k = k_c$. Pick some $\left[ \Lambda, l \right]$ 
+with $\Lambda$ stable,
+\begin{alignat*}{3}
+F &= \left( sI - \Lambda \right)^{-1} l
+\end{alignat*}
+
+The feedback loop is
+\begin{alignat*}{3}
+\theta_{1c}^T \left( sI - \Lambda \right)^{-1} l
+    \corresponds \dfrac{p(s)}{\lambda(s)}
+\end{alignat*}
+
+where $\lambda(s)$ is the characteristic polynomial
+of $\left( sI - \lambda \right)$ (chosen beforehand).
+
+(with constant assumption)
+\begin{alignat*}{3}
+\dfrac{u}{r} = C(s) = k_c \dfrac{\lambda(s)}{\lambda(s) - p(s)}
+\end{alignat*}
+
+\paragraph{Discussion}
+We pick $\Lambda, \lambda(s)$ 
+\begin{itemize}
+\item The adaptive parameters $\theta_{1c}$ decide on $p(s)$
+\item From $C^*$ we know that we should pick
+    $\Lambda \rightsquigarrow \lambda(s) = Z_m(s)$\\
+    (possible, since order of $Z_m(s)$ is $n-1 $)
+\item Comparing $C^*$ and $C$, we find
+\begin{alignat*}{3}
+Z_p(s) &\overset{!}{=} \lambda(s) - p^*(s)\\
+\Leftrightarrow p(s) &= \lambda(s) - Z_p(s)\\
+    &= Z_m(s) Z_p(s)
+\end{alignat*}
+\end{itemize}
+
+Since $Z_m(s), Z_p(s)$ are monic of order $n-1$,
+$Z_m(s), Z_p(s)$ is of order $n-2$.
+Also,  $p$ is of order $n-2 \Rightarrow$
+it is possible tose $k_c$ and $\theta_{1c}$,
+such that $C(s) = C^*(s)$.\\
+
+\begin{conclusion}{darkgreen}
+$\Rightarrow$ \textbf{Matching condition holds}, i.e.
+\begin{alignat*}{3}
+\exists ~ \theta &\corresponds \left[ k^*, \theta^{*T} \right]^T\\
+\txt{s.t.} \quad  y_p &= y_m \quad \txt{for } t \rightarrow \infty
+\end{alignat*}
+\end{conclusion}
+
+\subsubsection*{Error dynamics}
+\begin{alignat*}{3}
+\tilde{\theta} &= \matr{ \tilde{\theta}_1 \\ \tilde{k}}
+    \in \R^n
+\end{alignat*}
+
+\begin{alignat*}{3}
+&\txt{Plant P} \quad  &
+    \dot{x}_p(t) &= a_p x_p(t) + b_p u\\
+    && y_p(t) &= c_p^T x_p(t)\\
+~\\
+&\txt{Controller}  \quad &
+    \dot{ \phi_1}(t) &= \Lambda \phi_1 + lu\\
+    && u &= \theta_1^T \phi_1 + kr
+\end{alignat*}
+
+Note: adaptive law is missing here.\\
+Substituting $u$ in $P $:
+\begin{alignat*}{3}
+\dot{x}_p(t)
+    &= a_p x_p(t) + b_p \theta_1^T \phi + b_p k_r\\
+    &= a_p x_p(t) + b_p \theta_1^{*T} \phi_1 + b_p k^* r\\
+    & \quad + b_p \matr{ \tilde{\theta}_1^T & \tilde{k}}
+        \matr{ \phi \\ r}\\
+\dot{\phi} &= \Lambda \phi_1 + l \theta_1^{*T} \phi_1
+    + lk^*r + l \matr{ \tilde{\theta}_1^T & \tilde{k}} \matr{ \phi_1 \\ r}
+\end{alignat*}
+

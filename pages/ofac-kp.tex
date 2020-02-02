@@ -5,3 +5,31 @@
     \input{./img/ofac-kp-matching}
 \end{figure}
 
+We know
+\begin{alignat*}{3}
+y_p(t) &= \dfrac{Z_m(s)}{R_m(s)} \left[ k_p k(t) r(t) \right]\\
+y_m(t) &= \dfrac{Z_m(s)}{R_m(s)} \left[ k_m r(t) \right], \qquad k^* = \frac{k_m}{k_p}
+\end{alignat*}
+
+\subsubsection*{Error dynamics}
+\begin{alignat*}{3}
+e_y(t) &= y_p(t) - y_m(t)\\
+    &= k_p \dfrac{Z_m(s)}{R_m(s)} \left[ \tilde{k}(t) r(t) \right]
+\end{alignat*}
+
+\subsubsection*{KY lemma -- adaptive law}
+\begin{alignat*}{3}
+\dot{k} &= -\sgn{k_p} e(t) \phi(t) r(t)
+\end{alignat*}
+
+\subsubsection*{Barbalat's lemma}
+From Barbalat, we knowthat all signals%
+    \footnote{$e, \phi, \tilde{k}, r$}
+are bounded.
+As $n^* = 1$, $\dot{e}$ is bounded.
+Barbalat:
+\begin{alignat*}{3}
+\lim_{t \rightarrow \infty} |y_p(t) - y_m(t)| = 0
+\end{alignat*}
+
+

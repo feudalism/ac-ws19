@@ -1,0 +1,31 @@
+\def\w{0.7cm}
+\def\h{1cm}
+
+\begin{tikzpicture}[
+    block/.append style={minimum width=\w, text width=\w}
+]
+\node (start) {};
+
+\node (kt) [block,right=\w of start] {$k(t)$};
+\node (comp) [comp, right=\w of kt.east] {};
+\node (cout) [cout, right=4.7*\w of comp] {};
+\node (g) [block, right=\w of cout.east] {$G(s)$};
+
+\node (tt) [block] at \bwAbove{comp}{cout}{0.2}{-\h} {$\theta_1^T$};
+\node (filt) [nonlin] at \bwAbove{comp}{cout}{0.7}{-\h} {$F_i(s)$};
+
+\begin{scope}[arrow]
+\draw (start) -- (kt) node [pos=0.4,above] {$r$};
+\draw (kt) -- (comp);
+\draw (comp) -- (cout) -- (g);
+\draw (g.east) -- ++(0.5*\w,0) node [pos=1.3,above] {$y_p$};
+
+\draw (cout) |- (filt);
+\draw[vectline] (filt) -- (tt) node [pos=0.5,above,font=\scriptsize]
+    {$\phi_i(t)$};
+\draw (tt) -| (comp);
+\end{scope}
+
+\adaptiveBlock{kt}
+\adaptiveBlock{tt}
+\end{tikzpicture}

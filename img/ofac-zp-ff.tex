@@ -1,0 +1,22 @@
+\def\w{1cm}
+
+\begin{tikzpicture}[
+    block/.append style={text width=\w,
+        minimum width=\w,}
+]
+\node (start) {};
+
+\node (c) [block, right=\w of start] {$C^*(s)$};
+\node (g) [block, right=\w of c] {$G(s)$};
+
+\begin{scope}[arrow]
+\draw (start) -- (c)
+    node [pos=0.2, above] {$r(t)$};
+\draw (c) -- (g)
+    node [pos=0.5, above] {$u$};
+\draw (g.east) -- ++(\w,0)
+    node [pos=1,above,anchor=south west,align=left]
+    {$y_p = y_m,$ \\ $t \rightarrow \infty$};
+\end{scope}
+
+\end{tikzpicture}
